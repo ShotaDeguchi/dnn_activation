@@ -59,7 +59,7 @@ class DNN(nn.Module):
     def forward_pass(
         self, x
     ):
-        # scaling
+        # feature scaling
         if self.f_scl == None:
             z = x
         elif self.f_scl == "minmax":
