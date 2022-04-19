@@ -1,18 +1,6 @@
 """
 ********************************************************************************
-main file to execute your program
+training
 ********************************************************************************
 """
-
-import time
-import numpy as np
-import tensorflow as tf
-
-
-
-def main():
-
-
-
-if __name__ == "__main__":
 
