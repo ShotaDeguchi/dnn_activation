@@ -41,5 +41,37 @@ class DNN(nn.Module):
         self.d_type
         self.r_seed
 
+    def dnn_init(
+        self, f_in, f_out, f_hid, depth
+    ):
+        arch = nn.Sequential(
+            nn.Linear(f_in, f_hid)
+        )
+        return arch
 
+    def forward_pass(
+        self, x
+    ):
+        # scaling
+        if self.f_scl == None:
+            z = x
+        elif self.f_scl == "minmax":
+            z = x
+        elif self.f_scl == "mean":
+            z = x
+        else:
+            raise NotImplementedError(">>>>> forward_pass")
+        
+        y = 
+        return y
 
+    def __init__(self):
+        super(NeuralNetwork, self).__init__()
+        self.flatten = nn.Flatten()
+        self.linear_relu_stack = nn.Sequential(
+            nn.Linear(28*28, 512),
+            nn.ReLU(),
+            nn.Linear(512, 512),
+            nn.ReLU(),
+            nn.Linear(512, 10),
+        )
