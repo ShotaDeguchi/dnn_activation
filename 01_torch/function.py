@@ -20,7 +20,6 @@ def func2(x):
     return y
 
 def func3(x, y):
-    z = .6 * np.sin(np.pi * x) 
-    z = .6 * np.sin(np.pi * y) 
+    z = np.sin(2. * np.pi * x) + np.exp(y) 
     return z
 
