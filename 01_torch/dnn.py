@@ -13,12 +13,13 @@ from torch import nn
 class DNN(nn.Module):
     def __init__(
         self, 
+        x, y, 
         f_in, f_out, f_hid, depth, 
         w_init, b_init, act, 
         lr = 5e-4, opt = "Adam", f_scl = "minmax", 
         d_type = "float32", r_seed = 1234
     ):
-        # init
+        # initialization
         super().__init__()
         self.f_in   = f_in
         self.f_out  = f_out
@@ -35,11 +36,17 @@ class DNN(nn.Module):
         # self.device = device
         self.setup(r_seed, d_type)
 
+        # data
+        self.x = x
+        self.y = y
+
     def setup(
         self, d_type, r_seed
     ):
-        self.d_type
-        self.r_seed
+        os.environ["PYTHONHASHSEED"] = str(r_seed)
+        np.random.seed(r_seed)
+        torch.manual_seed(r_seed)
+        torch.set_default_dtype(d_type)
 
     def dnn_init(
         self, f_in, f_out, f_hid, depth
@@ -62,16 +69,6 @@ class DNN(nn.Module):
         else:
             raise NotImplementedError(">>>>> forward_pass")
         
-        y = 
-        return y
+        # y = 
+        # return y
 
-    def __init__(self):
-        super(NeuralNetwork, self).__init__()
-        self.flatten = nn.Flatten()
-        self.linear_relu_stack = nn.Sequential(
-            nn.Linear(28*28, 512),
-            nn.ReLU(),
-            nn.Linear(512, 512),
-            nn.ReLU(),
-            nn.Linear(512, 10),
-        )
