@@ -1,5 +1,5 @@
 ﻿# dnn_activation
-DNN (Deep Neural Network) approximation performance vs. activation function selection in terms of their continuity. 
+We investigate the relation between DNN (Deep Neural Network) approximation and activation function selection. 
 
 ## Purpose
 DNN approximation is heavily dependent on their architecture, especially activation functions. 
