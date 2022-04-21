@@ -14,12 +14,12 @@ def func1(x):
 
 def func2(x):
     if x <= 0:
-        y = .2 * np.sin(6. * np.pi * x)
+        y = .2 * np.sin(4. * np.pi * x)
     else:
-        y = 1. + .1 * x * np.cos(12. * np.pi * x)
+        y = 1. + .1 * x * np.cos(16. * np.pi * x)
     return y
 
 def func3(x, y):
-    z = np.sin(2. * np.pi * x) + np.exp(y) 
+    z = x * np.cos(2. * np.pi * x) + np.exp(y) 
     return z
 
