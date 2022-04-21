@@ -21,6 +21,5 @@ def func2(x):
 
 def func3(x, y):
     z = x * np.cos(2. * np.pi * x) + np.exp(y) 
-    z = x * np.cos(2. * np.pi * x) + np.exp(y) 
     return z
 
