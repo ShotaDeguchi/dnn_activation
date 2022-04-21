@@ -4,6 +4,9 @@ This repo is a supplementary material for [author's blog post (written Japanese)
 ## Purpose
 Activation functions introduce non-linearity to DNN approximation i.e. DNN approximations are heavily dependent on the properties of the selected activation functions. This repo's codes learns several functions with 5 different activation functions, namely, ReLU, ELU, Swish, sin, and tanh. Networks have different parameter initializations, [Glorot normal](https://proceedings.mlr.press/v9/glorot10a.html) for sin and tanh activation, [He normal](https://arxiv.org/abs/1502.01852) for ReLU, ELU, Swish. 
 
+## Example
+snapshots from examples. 
+
 ## Reference
 [1] [author's blog post](link). 
 <br>
