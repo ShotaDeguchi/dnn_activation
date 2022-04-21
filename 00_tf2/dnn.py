@@ -4,7 +4,7 @@ deep neural dnn
 ********************************************************************************
 """
 
-import os   
+import os
 import time
 import numpy as np
 import tensorflow as tf
@@ -78,7 +78,7 @@ class dnn_1D(tf.keras.Model):
         for l in range(depth - 1):
             dnn.add(
                 tf.keras.layers.Dense(
-                    f_hid, activation = self.act, use_bias = True,
+                    f_hid, activation = self.act, use_bias = True, 
                     kernel_initializer = self.w_init, bias_initializer = self.b_init, 
                     kernel_regularizer = None, bias_regularizer = None, 
                     activity_regularizer = None, kernel_constraint = None, bias_constraint = None
