@@ -96,7 +96,6 @@ class dnn_1D(tf.keras.Model):
             activation = tf.keras.activations.relu(x, alpha=0.0, max_value=None, threshold=0.0)
         return activation
 
-
     def opt_alg(
         self, lr, opt
     ):
@@ -105,6 +104,10 @@ class dnn_1D(tf.keras.Model):
         print("         optimizer    :", opt)
         if opt == "SGD":
             optimizer = tf.keras.optimizers.SGD(learning_rate = lr, momentum = 0.0, nesterov = False)
+        elif opt == "Momentum":
+            optimizer = tf.keras.optimizers.SGD(learning_rate = lr, momentum = 0.9, nesterov = False)
+        elif opt == "NAG":
+            optimizer = tf.keras.optimizers.SGD(learning_rate = lr, momentum = 0.9, nesterov = True)
         elif opt == "RMSprop":
             optimizer = tf.keras.optimizers.RMSprop(learning_rate = lr, rho = 0.9, momentum = 0.0, centered = False)
         elif opt == "Adam":
