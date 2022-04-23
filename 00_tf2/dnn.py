@@ -43,7 +43,16 @@ class dnn_1D(tf.keras.Model):
         self.dnn = self.dnn_init(self.f_in, self.f_out, self.f_hid, self.depth)
         self.optimizer = self.opt_alg(self.lr, self.opt)
         self.loss_log = []
+
+        # print some key settings
         print("\n************************************************************")
+        
+        print("****************     MAIN PROGRAM START     ****************")
+
+        print("   ")
+        print("************************************************************")
+
+
         print("************************************************************")
 
     def setup(
