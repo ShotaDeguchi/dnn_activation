@@ -120,6 +120,20 @@ class dnn_1D(tf.keras.Model):
             raise NotImplementedError(">>>>> opt_alg")
         return optimizer
 
+    def train(
+        self, n_epoch, n_batch, c_tol
+    ):
+        print("\n>>>>> train")
+        print("         n_epoch:", n_epoch)
+        print("         n_batch:", n_batch)
+        print("         c_tol  :", c_tol)
+
+        # full-batch training
+        print("\n>>>>> executing full-batch training")
+        for 
+        # mini-batch training
+        print("\n>>>>> executing mini-batch training")
+        for 
 
 # class dnn_2D(tf.keras.Model):
 #     def __init__(
