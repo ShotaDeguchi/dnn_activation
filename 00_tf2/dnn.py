@@ -133,10 +133,11 @@ class dnn_1D(tf.keras.Model):
 
         # full-batch training
         print("\n>>>>> executing full-batch training")
-        for 
+        for ep in range(n_epoch):
+
         # mini-batch training
         print("\n>>>>> executing mini-batch training")
-        for 
+        for ep in range(n_epoch):
 
     def infer(
         self, x
