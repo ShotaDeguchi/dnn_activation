@@ -19,18 +19,18 @@ class dnn_1D(tf.keras.Model):
         d_type = "float32", r_seed = 1234
     ):
         # initialization
-        self.f_in   = f_in
-        self.f_out  = f_out
-        self.f_hid  = f_hid
-        self.depth  = depth
-        self.w_init = w_init
-        self.b_init = b_init
-        self.act    = act
-        self.lr     = lr
-        self.opt    = opt
-        self.f_scl  = f_scl
-        self.d_type = d_type
-        self.r_seed = r_seed
+        self.f_in   = f_in     # input features
+        self.f_out  = f_out    # output features
+        self.f_hid  = f_hid    # hidden layer dim
+        self.depth  = depth    # depth of dnn
+        self.w_init = w_init   # weight initializer
+        self.b_init = b_init   # bias initializer
+        self.act    = act      # activation
+        self.lr     = lr       # learning rate
+        self.opt    = opt      # optimizer (string)
+        self.f_scl  = f_scl    # feature scaling ("linear" / "minmax" / "mean")
+        self.d_type = d_type   # data type
+        self.r_seed = r_seed   # random seed
 
         # set data type and random seed
         self.setup(self.d_type, self.r_seed)
@@ -46,13 +46,7 @@ class dnn_1D(tf.keras.Model):
 
         # print some key settings
         print("\n************************************************************")
-        
         print("****************     MAIN PROGRAM START     ****************")
-
-        print("   ")
-        print("************************************************************")
-
-
         print("************************************************************")
 
     def setup(
@@ -143,6 +137,11 @@ class dnn_1D(tf.keras.Model):
         # mini-batch training
         print("\n>>>>> executing mini-batch training")
         for 
+
+    def infer(
+        self, x
+    ):
+        print("\n>>>>> infer")
 
 # class dnn_2D(tf.keras.Model):
 #     def __init__(
