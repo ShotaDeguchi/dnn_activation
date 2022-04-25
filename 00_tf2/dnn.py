@@ -33,14 +33,20 @@ class dnn_1D(tf.keras.Model):
         self.r_seed = r_seed   # random seed
 
         # set data type and random seed
-        self.setup(self.d_type, self.r_seed)
+        self.type_seed(self.d_type, self.r_seed)
 
         # input - output pair
         self.x = x
         self.y = y
 
         # build a deep neural network
-        self.dnn = self.dnn_init(self.f_in, self.f_out, self.f_hid, self.depth)
+        self.w_init = self.weight_init(self.w_init, self.r_seed)
+        self.b_init = self.bias_init(self.b_init)
+        self.act    = self.act_func(self.act)
+        self.dnn = self.dnn_init(
+            self.f_in, self.f_out, self.f_hid, self.depth, 
+            w_init, b_init, act
+        )
         self.optimizer = self.opt_alg(self.lr, self.opt)
         self.loss_log = []
 
@@ -49,10 +55,10 @@ class dnn_1D(tf.keras.Model):
         print("****************     MAIN PROGRAM START     ****************")
         print("************************************************************")
 
-    def setup(
+    def type_seed(
         self, d_type, r_seed
     ):
-        print("\n>>>>> setup")
+        print("\n>>>>> type_seed")
         print("         data type  :", d_type)
         print("         random seed:", r_seed)
         os.environ["PYTHONHASHSEED"] = str(r_seed)
@@ -61,7 +67,9 @@ class dnn_1D(tf.keras.Model):
         tf.keras.backend.set_floatx(d_type)
 
     def dnn_init(
-        self, f_in, f_out, f_hid, depth
+        self, 
+        f_in, f_out, f_hid, depth,
+        w_init, b_init, act
     ):
         print("\n>>>>> dnn_init")
         print("         f_in :", f_in)
@@ -81,8 +89,8 @@ class dnn_1D(tf.keras.Model):
         for l in range(depth - 1):
             dnn.add(
                 tf.keras.layers.Dense(
-                    f_hid, activation = self.act, use_bias = True, 
-                    kernel_initializer = self.w_init, bias_initializer = self.b_init, 
+                    f_hid, activation = act, use_bias = True, 
+                    kernel_initializer = w_init, bias_init = b_init, 
                     kernel_regularizer = None, bias_regularizer = None, 
                     activity_regularizer = None, kernel_constraint = None, bias_constraint = None
                 )
@@ -98,6 +106,34 @@ class dnn_1D(tf.keras.Model):
         if act == "relu":
             activation = tf.keras.activations.relu(x, alpha=0.0, max_value=None, threshold=0.0)
         return activation
+
+    def weight_init(
+        self, init, seed
+    ):
+        print("\n>>>>> weight_init")
+        print("         initializer:", init)
+        if init == "Glorot":
+            weight = tf.keras.initializers.GlorotNormal(seed = seed)
+        elif init == "He":
+            weight = tf.keras.initializers.HeNormal(seed = seed)
+        elif init == "LeCun":
+            weight = tf.keras.initializers.LecunNormal(seed = seed)
+        else:
+            raise NotImplementedError(">>>>> weight_init")
+        return weight
+
+    def bias_init(
+        self, init
+    ):
+        print("\n>>>>> bias_init")
+        print("         initializer:", init)
+        if init == "zeros":
+            bias = tf.keras.initializers.Zeros()
+        elif init == "ones":
+            bias = tf.keras.initializers.Ones()
+        else:
+            raise NotImplementedError(">>>>> bias_init")
+        return bias
 
     def opt_alg(
         self, lr, opt
