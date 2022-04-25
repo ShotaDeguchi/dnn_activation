@@ -1,6 +1,6 @@
 """
 ********************************************************************************
-deep neural dnn
+deep neural network
 ********************************************************************************
 """
 
@@ -135,7 +135,7 @@ class dnn_1D(tf.keras.Model):
             print("\n>>>>> executing mini-batch training")
             for epc in range(n_epoch):
                 for idx in range(n_bs):
-                    
+
 
 
     def infer(
