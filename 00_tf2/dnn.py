@@ -27,7 +27,7 @@ class dnn_1D(tf.keras.Model):
         self.b_init = b_init   # bias initializer
         self.act    = act      # activation
         self.lr     = lr       # learning rate
-        self.opt    = opt      # optimizer (string)
+        self.opt    = opt      # optimizer ("SGD" / "RMSprop" / "Adam")
         self.f_scl  = f_scl    # feature scaling ("linear" / "minmax" / "mean")
         self.d_type = d_type   # data type
         self.r_seed = r_seed   # random seed
@@ -107,10 +107,6 @@ class dnn_1D(tf.keras.Model):
         print("         optimizer    :", opt)
         if opt == "SGD":
             optimizer = tf.keras.optimizers.SGD(learning_rate = lr, momentum = 0.0, nesterov = False)
-        elif opt == "Momentum":
-            optimizer = tf.keras.optimizers.SGD(learning_rate = lr, momentum = 0.9, nesterov = False)
-        elif opt == "NAG":
-            optimizer = tf.keras.optimizers.SGD(learning_rate = lr, momentum = 0.9, nesterov = True)
         elif opt == "RMSprop":
             optimizer = tf.keras.optimizers.RMSprop(learning_rate = lr, rho = 0.9, momentum = 0.0, centered = False)
         elif opt == "Adam":
