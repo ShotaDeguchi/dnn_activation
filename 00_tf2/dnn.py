@@ -127,13 +127,16 @@ class dnn_1D(tf.keras.Model):
         print("         n_batch:", n_batch)
         print("         c_tol  :", c_tol)
 
-        # full-batch training
-        print("\n>>>>> executing full-batch training")
-        for ep in range(n_epoch):
+        if n_batch == -1:
+            print("\n>>>>> executing full-batch training")
+            for epc in range(n_epoch):
 
-        # mini-batch training
-        print("\n>>>>> executing mini-batch training")
-        for ep in range(n_epoch):
+        else:
+            print("\n>>>>> executing mini-batch training")
+            for epc in range(n_epoch):
+                for idx in range(n_bs):
+                    
+
 
     def infer(
         self, x
