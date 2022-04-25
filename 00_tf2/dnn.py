@@ -66,6 +66,43 @@ class dnn_1D(tf.keras.Model):
         tf.random.set_seed(r_seed)
         tf.keras.backend.set_floatx(d_type)
 
+    def weight_init(
+        self, init, seed
+    ):
+        print("\n>>>>> weight_init")
+        print("         initializer:", init)
+        if init == "Glorot":
+            weight = tf.keras.initializers.GlorotNormal(seed = seed)
+        elif init == "He":
+            weight = tf.keras.initializers.HeNormal(seed = seed)
+        elif init == "LeCun":
+            weight = tf.keras.initializers.LecunNormal(seed = seed)
+        else:
+            raise NotImplementedError(">>>>> weight_init")
+        return weight
+
+    def bias_init(
+        self, init
+    ):
+        print("\n>>>>> bias_init")
+        print("         initializer:", init)
+        if init == "zeros":
+            bias = tf.keras.initializers.Zeros()
+        elif init == "ones":
+            bias = tf.keras.initializers.Ones()
+        else:
+            raise NotImplementedError(">>>>> bias_init")
+        return bias
+
+    def act_func(
+        self, act
+    ):
+        print("\n>>>>> act_func")
+        print("         activation:", act)
+        if act == "relu":
+            activation = tf.keras.activations.relu(x, alpha=0.0, max_value=None, threshold=0.0)
+        return activation
+
     def dnn_init(
         self, 
         f_in, f_out, f_hid, depth,
@@ -97,43 +134,6 @@ class dnn_1D(tf.keras.Model):
             )
         dnn.add(tf.keras.layers.Dense(f_out, activation = "linear"))
         return dnn
-
-    def act_func(
-        self, act
-    ):
-        print("\n>>>>> act_func")
-        print("         activation:", act)
-        if act == "relu":
-            activation = tf.keras.activations.relu(x, alpha=0.0, max_value=None, threshold=0.0)
-        return activation
-
-    def weight_init(
-        self, init, seed
-    ):
-        print("\n>>>>> weight_init")
-        print("         initializer:", init)
-        if init == "Glorot":
-            weight = tf.keras.initializers.GlorotNormal(seed = seed)
-        elif init == "He":
-            weight = tf.keras.initializers.HeNormal(seed = seed)
-        elif init == "LeCun":
-            weight = tf.keras.initializers.LecunNormal(seed = seed)
-        else:
-            raise NotImplementedError(">>>>> weight_init")
-        return weight
-
-    def bias_init(
-        self, init
-    ):
-        print("\n>>>>> bias_init")
-        print("         initializer:", init)
-        if init == "zeros":
-            bias = tf.keras.initializers.Zeros()
-        elif init == "ones":
-            bias = tf.keras.initializers.Ones()
-        else:
-            raise NotImplementedError(">>>>> bias_init")
-        return bias
 
     def opt_alg(
         self, lr, opt
