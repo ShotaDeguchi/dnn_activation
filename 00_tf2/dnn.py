@@ -123,7 +123,11 @@ class dnn_1D(tf.keras.Model):
         dnn = tf.keras.Sequential()
         dnn.add(tf.keras.layers.InputLayer(f_in))
         if self.f_scl == "linear" or None:
-            dnn.add(tf.keras.layers.Lambda(lambda x: x))
+            dnn.add(
+                tf.keras.layers.Lambda(
+                    lambda x: x
+                )
+            )
         elif self.f_scl == "minmax":
             dnn.add(
                 tf.keras.layers.Lambda(
