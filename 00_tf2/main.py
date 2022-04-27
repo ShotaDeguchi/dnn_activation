@@ -17,7 +17,7 @@ def main():
     config_gpu(gpu_flg)
 
     # problem setup
-    p_id = 2
+    p_id = 0
     xmin = -1.
     xmax =  1.
     nx   = 100
@@ -27,7 +27,7 @@ def main():
     f_in   = 1
     f_out  = 1
     f_hid  = 5
-    depth  = 3
+    depth  = 4
     w_init = "Glorot"
     b_init = "zeros"
     lr     = 5e-4
