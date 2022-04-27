@@ -50,7 +50,7 @@ class dnn_1D(tf.keras.Model):
         self.act    = self.act_func(self.act)
         self.dnn = self.dnn_init(
             self.f_in, self.f_out, self.f_hid, self.depth, 
-            w_init, b_init, act
+            self.w_init, self.b_init, self.act
         )
         self.optimizer = self.opt_alg(self.lr, self.opt)
         self.loss_log = []
@@ -106,6 +106,8 @@ class dnn_1D(tf.keras.Model):
         print("         activation:", act)
         if act == "relu":
             activation = tf.keras.activations.relu(x, alpha=0.0, max_value=None, threshold=0.0)
+        else:
+            raise NotImplementedError(">>>>> act_func")
         return activation
 
     def dnn_init(
@@ -120,16 +122,20 @@ class dnn_1D(tf.keras.Model):
         print("         depth:", depth)
         dnn = tf.keras.Sequential()
         dnn.add(tf.keras.layers.InputLayer(f_in))
-        if self.f_scl == "linear":
+        if self.f_scl == "linear" or None:
             dnn.add(tf.keras.layers.Lambda(lambda x: x))
         elif self.f_scl == "minmax":
-            dnn.add(tf.keras.layers.Lambda(
-                lambda x: 2. * (x - self.lower) / (self.upper - self.lower) - 1.
-            ))
+            dnn.add(
+                tf.keras.layers.Lambda(
+                    lambda x: 2. * (x - self.lower) / (self.upper - self.lower) - 1.
+                )
+            )
         elif self.f_scl == "mean":
-            dnn.add(tf.kears.layers.Lambda(
-                lambda x: (x - self.mean) / (self.upper - self.lower)
-            ))
+            dnn.add(
+                tf.keras.layers.Lambda(
+                    lambda x: (x - self.mean) / (self.upper - self.lower)
+                )
+            )
         else:
             raise NotImplementedError(">>>>> dnn_init")
         for l in range(depth - 1):
@@ -172,9 +178,24 @@ class dnn_1D(tf.keras.Model):
         print("         n_batch:", n_batch)
         print("         c_tlrnc:", c_tlrnc)
 
+        t0 = time.time()
         if n_batch == -1:
             print("\n>>>>> executing full-batch training")
             for epc in range(n_epoch):
+                loss_e = self.loss_glb
+                self.loss_log.append(loss_e)
+
+
+                # monitor 
+                if epc % 10 == 0:
+                    elps = time.time() - t0
+                    print("epc: %d, loss: %.6e, elps: %.3f"
+                        % (epc, loss_e, elps))
+                    t0 = time.time()
+
+                # save 
+                if epc % 100 == 0:
+                    # ......
 
         else:
             print("\n>>>>> executing mini-batch training")
