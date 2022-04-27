@@ -196,6 +196,12 @@ class dnn_1D(tf.keras.Model):
                 # save 
                 if epc % 100 == 0:
                     # ......
+                    model.save(...)
+
+                # terminate if converged
+                if loss_e < c_tlrnc:
+                    print(">>>>> converging to the tolerance")
+                    break
 
         else:
             print("\n>>>>> executing mini-batch training")
