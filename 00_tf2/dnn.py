@@ -171,26 +171,26 @@ class dnn_1D(tf.keras.Model):
         return optimizer
 
     def train(
-        self, n_epoch, n_batch, c_tlrnc
+        self, n_epc, n_btc, c_tol
     ):
         print("\n>>>>> train")
-        print("         n_epoch:", n_epoch)
-        print("         n_batch:", n_batch)
-        print("         c_tlrnc:", c_tlrnc)
+        print("         n_epoch:", n_epc)
+        print("         n_batch:", n_btc)
+        print("         c_tlrnc:", c_tol)
 
         t0 = time.time()
-        if n_batch == -1:
+        if n_btc == -1:
             print("\n>>>>> executing full-batch training")
-            for epc in range(n_epoch):
-                loss_e = self.loss_glb
-                self.loss_log.append(loss_e)
+            for epc in range(n_epc):
+                loss_epc = self.loss_glb(...)
+                self.loss_log.append(loss_epc)
 
 
                 # monitor 
                 if epc % 10 == 0:
                     elps = time.time() - t0
                     print("epc: %d, loss: %.6e, elps: %.3f"
-                        % (epc, loss_e, elps))
+                        % (epc, loss_epc, elps))
                     t0 = time.time()
 
                 # save 
@@ -199,14 +199,15 @@ class dnn_1D(tf.keras.Model):
                     model.save(...)
 
                 # terminate if converged
-                if loss_e < c_tlrnc:
+                if loss_e < c_tol:
                     print(">>>>> converging to the tolerance")
                     break
 
         else:
             print("\n>>>>> executing mini-batch training")
-            for epc in range(n_epoch):
-                for idx in range(n_bs):
+            n_itr = ...
+            for epc in range(n_epc):
+                for idx in range(0, n_itr, n_btc):
 
 
 
