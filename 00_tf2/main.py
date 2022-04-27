@@ -103,7 +103,7 @@ def main():
 
     # compare
     if p_id == 0:
-        plt.figure(figsize=(6, 6))
+        plt.figure(figsize=(4, 4))
         plt.plot(x, y, label="function", alpha=.3, linestyle="-", lw = 5, c="k")
         plt.scatter(x_train, y_train, alpha=.7, marker="x", c="r")
         plt.plot(x_infer, y_tanh, label="tanh", alpha=.7, linestyle="--")
@@ -129,7 +129,7 @@ def main():
         plt.savefig("./figures/loss_problem" + str(p_id) + ".png")
 
     elif p_id == 1:
-        plt.figure(figsize=(6, 6))
+        plt.figure(figsize=(4, 4))
         plt.plot(x, y, label="function", alpha=.3, linestyle="-", lw = 5, c="k")
         plt.scatter(x_train, y_train, alpha=.7, marker="x", c="r")
         plt.plot(x_infer, y_tanh, label="tanh", alpha=.7, linestyle="--")
@@ -155,7 +155,7 @@ def main():
         plt.savefig("./figures/loss_problem" + str(p_id) + ".png")
 
     elif p_id == 2:
-        plt.figure(figsize=(6, 6))
+        plt.figure(figsize=(4, 4))
         plt.plot(x, y, label="function", alpha=.3, linestyle="-", lw = 5, c="k")
         plt.scatter(x_train, y_train, alpha=.7, marker="x", c="r")
         plt.plot(x_infer, y_tanh, label="tanh", alpha=.7, linestyle="--")
