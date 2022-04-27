@@ -16,7 +16,7 @@ def main():
     config_gpu(gpu_flg = 1)
 
     # problem setup
-    p_id = 2
+    p_id = 1
     xmin = -1.
     xmax =  1.
     nx   = 2 ** 8
@@ -27,14 +27,12 @@ def main():
     f_out  = 1
     f_hid  = 5
     depth  = 3
-    b_init = "zeros"
     lr     = 5e-4
     opt    = "Adam"
     f_scl  = "minmax"
     d_type = "float32"
     r_seed = 1234
     n_epc  = int(5e4)
-    n_epc  = int(1e4)
     n_btc  = -1
     c_tol  = 1e-6
 
@@ -59,6 +57,7 @@ def main():
 
     # define, train, and infer with tanh model
     w_init = "Glorot"
+    b_init = "zeros"
     act = "tanh"
     model_tanh = DNN(
         x_train, y_train, 
@@ -74,6 +73,7 @@ def main():
 
     # relu model
     w_init = "He"
+    b_init = "zeros"
     act = "relu"
     model_relu = DNN(
         x_train, y_train, 
@@ -88,6 +88,7 @@ def main():
 
     # swish model
     w_init = "He"
+    b_init = "zeros"
     act = "swish"
     model_swish = DNN(
         x_train, y_train, 
