@@ -33,6 +33,10 @@ class DNN(tf.keras.Model):
         self.d_type = d_type   # data type
         self.r_seed = r_seed   # random seed
 
+        print("\n************************************************************")
+        print("********************     DELLO WORLD     *******************")
+        print("************************************************************")
+
         # set data type and random seed
         self.type_seed(self.d_type, self.r_seed)
 
@@ -57,11 +61,6 @@ class DNN(tf.keras.Model):
         self.optimizer = self.opt_alg(self.lr, self.opt)
         self.loss_log = []
         self.save_path = "./saved_model/"
-
-        # print some key settings
-        print("\n************************************************************")
-        print("********************     DELLO WORLD     *******************")
-        print("************************************************************")
 
     def type_seed(
         self, d_type, r_seed
