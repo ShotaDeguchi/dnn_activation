@@ -68,11 +68,6 @@ def main():
         lr, opt, f_scl, 
         d_type, r_seed
     )
-    # train
-    with tf.device("/device:GPU:0"):
-        model_relu.train(n_epc = int(1e4), n_btc = -1, c_tol = 1e-5)
-
-    # define model
     act = "tanh"
     model_tanh = DNN(
         x_train, y_train, 
@@ -81,11 +76,6 @@ def main():
         lr, opt, f_scl, 
         d_type, r_seed
     )
-    # train
-    with tf.device("/device:GPU:0"):
-        model_tanh.train(n_epc = int(1e4), n_btc = -1, c_tol = 1e-5)
-
-    # define model
     act = "swish"
     model_swish = DNN(
         x_train, y_train, 
@@ -94,7 +84,12 @@ def main():
         lr, opt, f_scl, 
         d_type, r_seed
     )
+
     # train
+    with tf.device("/device:GPU:0"):
+        model_relu.train(n_epc = int(1e4), n_btc = -1, c_tol = 1e-5)
+    with tf.device("/device:GPU:0"):
+        model_tanh.train(n_epc = int(1e4), n_btc = -1, c_tol = 1e-5)
     with tf.device("/device:GPU:0"):
         model_swish.train(n_epc = int(1e4), n_btc = -1, c_tol = 1e-5)
 
@@ -115,7 +110,7 @@ def main():
         plt.ylim(-1.2, 1.2)
         plt.grid(alpha=.5)
         plt.legend(loc="upper left")
-        plt.savefig("./figures/problem" + str(p_id) + ".jpg")
+        plt.savefig("./figures/problem" + str(p_id) + ".png")
     elif p_id == 1:
         plt.figure(figsize=(6, 6))
         plt.plot(x, y, label="function", alpha=.7, linestyle="-", lw = 3, c="k")
@@ -127,7 +122,7 @@ def main():
         plt.ylim(-1.2, 1.2)
         plt.grid(alpha=.5)
         plt.legend(loc="upper left")
-        plt.savefig("./figures/problem" + str(p_id) + ".jpg")
+        plt.savefig("./figures/problem" + str(p_id) + ".png")
     elif p_id == 2:
         plt.figure(figsize=(6, 6))
         plt.plot(x, y, label="function", alpha=.7, linestyle="-", lw = 3, c="k")
@@ -139,7 +134,7 @@ def main():
         plt.ylim(-2.5, 2.5)
         plt.grid(alpha=.5)
         plt.legend(loc="upper left")
-        plt.savefig("./figures/problem" + str(p_id) + ".jpg")
+        plt.savefig("./figures/problem" + str(p_id) + ".png")
 
 if __name__ == "__main__":
     main()
