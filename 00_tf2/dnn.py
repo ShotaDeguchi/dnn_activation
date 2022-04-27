@@ -39,6 +39,11 @@ class dnn_1D(tf.keras.Model):
         self.x = x
         self.y = y
 
+        XY = tf.concat([x, y], 1)
+        self.lower = tf.cast(tf.reduce_min(XY, axis = 0), dtype=self.d_type)
+        self.upper = tf.cast(tf.reduce_max(XY, axis = 0), dtype=self.d_type)
+        self.mean = tf.cast(tf.reduce_mean(XY, axis = 0), dtype=self.d_type)
+
         # build a deep neural network
         self.w_init = self.weight_init(self.w_init, self.r_seed)
         self.b_init = self.bias_init(self.b_init)
@@ -118,9 +123,13 @@ class dnn_1D(tf.keras.Model):
         if self.f_scl == "linear":
             dnn.add(tf.keras.layers.Lambda(lambda x: x))
         elif self.f_scl == "minmax":
-            dnn.add(tf.keras.layers.Lambda(lambda x: 2. * (x - self.lb) / (self.ub - self.lb) - 1.))
+            dnn.add(tf.keras.layers.Lambda(
+                lambda x: 2. * (x - self.lower) / (self.upper - self.lower) - 1.
+            ))
         elif self.f_scl == "mean":
-            dnn.add(tf.keras.layers.Lambda(lambda x: (x - self.mn) / (self.ub - self.lb)))
+            dnn.add(tf.kears.layers.Lambda(
+                lambda x: (x - self.mean) / (self.upper - self.lower)
+            ))
         else:
             raise NotImplementedError(">>>>> dnn_init")
         for l in range(depth - 1):
@@ -156,12 +165,12 @@ class dnn_1D(tf.keras.Model):
         return optimizer
 
     def train(
-        self, n_epoch, n_batch, c_tol
+        self, n_epoch, n_batch, c_tlrnc
     ):
         print("\n>>>>> train")
         print("         n_epoch:", n_epoch)
         print("         n_batch:", n_batch)
-        print("         c_tol  :", c_tol)
+        print("         c_tlrnc:", c_tlrnc)
 
         if n_batch == -1:
             print("\n>>>>> executing full-batch training")
