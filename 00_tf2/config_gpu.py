@@ -12,7 +12,7 @@ from tensorflow.python.client import device_lib
 #               # 1: Find the first GPU, and restrict the memory usage (adaptive)
 #               # 2: Create 2 virtual GPUs with 1GB memory each
 
-def config_gpu(gpu_flg):
+def config_gpu(gpu_flg=1):
     # gpu configuration
     tf.debugging.set_log_device_placement(False)   # True to check executing device carefully
     gpus = tf.config.experimental.list_physical_devices("GPU")

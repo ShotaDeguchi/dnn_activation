@@ -13,11 +13,11 @@ from dnn import *
 
 def main():
     # gpu configuration
-    gpu_flg = 0
+    gpu_flg = 1
     config_gpu(gpu_flg)
 
     # problem setup
-    p_id = 1
+    p_id = 0
     xmin = -1.
     xmax =  1.
     nx   = 2 ** 8
@@ -69,6 +69,7 @@ def main():
     )
     with tf.device("/device:GPU:0"):
         model_tanh.train(n_epc, n_btc, c_tol)
+    # model_tanh.save("./saved_model/model_tanh")
     y_tanh = model_tanh.infer(x_infer)
 
     # relu model
@@ -83,7 +84,6 @@ def main():
     )
     with tf.device("/device:GPU:0"):
         model_relu.train(n_epc, n_btc, c_tol)
-    # model_relu.save("./saved_model/model_relu")
     y_relu = model_relu.infer(x_infer)
 
     # swish model
