@@ -72,8 +72,6 @@ def main():
     with tf.device("/device:GPU:0"):
         model.train(n_epc = int(1e4), n_btc = -1, c_tol = 1e-5)
     # infer
-    # x_infer = np.linspace(xmin, xmax, nx).reshape(-1, 1)
-    # x_infer = tf.convert_to_tensor(x_infer, dtype=d_type)
     y_infer = model.infer(x_infer)
 
     # compare
@@ -82,7 +80,10 @@ def main():
     plt.plot(x_infer, y_infer, label="dnn", alpha=.7, linestyle="--", c="r")
     plt.scatter(x_train, y_train, alpha=.7, marker="x", c="r")
     plt.xlim(-1.2, 1.2)
-    plt.ylim(-1.2, 1.2)
+    if p_id == 0 or 1:
+        plt.ylim(-1.2, 1.2)
+    elif p_id == 2:
+        plt.ylim(-2.5, 2.5)
     plt.grid(alpha=.5)
     plt.legend(loc="upper left")
     plt.savefig("./figures/problem" + str(p_id) + ".jpg")

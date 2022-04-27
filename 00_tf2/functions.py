@@ -26,9 +26,9 @@ def func1_tf(x):
     return y
 
 def func2(x):
-    y = np.exp(x) * np.sin(4. * np.pi * x)
+    y = np.exp(x) * np.sin(2. * np.pi * x)
     return y
 def func2_tf(x):
-    y = tf.exp(x) * tf.sin(4. * np.pi * x)
+    y = tf.exp(x) * tf.sin(2. * np.pi * x)
     return y
 
