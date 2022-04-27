@@ -4,8 +4,6 @@ main file to execute your program
 ********************************************************************************
 """
 
-import os
-import sys
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -70,11 +68,11 @@ def main():
 
     # perpare dataset
     x_train = tf.random.uniform(
-        (30, 1), xmin, xmax, dtype=d_type
+        (10, 1), xmin, xmax, dtype=d_type
     )
-    # x_train = tf.linspace(
-    #     xmin, xmax, int(nx / 10)
-    # )
+    # x_train = np.linspace(xmin, xmax, int(nx / 5))
+    # x_train = x_train.reshape(-1, 1)
+    # x_train = tf.convert_to_tensor(x_train)
     y_train = tf.sin(np.pi * x_train)
 
     # define model
@@ -88,7 +86,7 @@ def main():
 
     # train
     with tf.device("/device:GPU:0"):
-        model.train(n_epc = int(1e4), n_btc = -1, c_tol = 1e-5)
+        model.train(n_epc = int(100), n_btc = -1, c_tol = 1e-5)
 
     # infer
     x_infer = tf.cast(x, dtype=d_type)
