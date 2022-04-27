@@ -232,9 +232,9 @@ class DNN(tf.keras.Model):
                         % (epc, loss_epc, elps))
                     t0 = time.time()
 
-                # save 
-                if epc % 100 == 0:
-                    self.save(self.save_path + "model" + str(epc))
+                # # save 
+                # if epc % 100 == 0:
+                #     self.save(self.save_path + "model" + str(epc))
 
                 # terminate if converged
                 if loss_epc < c_tol:
