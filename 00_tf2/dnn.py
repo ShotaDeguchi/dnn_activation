@@ -226,7 +226,7 @@ class DNN(tf.keras.Model):
                 self.loss_log.append(loss_epc)
 
                 # monitor 
-                if epc % 10 == 0:
+                if epc % 100 == 0:
                     elps = time.time() - t0
                     print("epc: %d, loss: %.6e, elps: %.3f"
                         % (epc, loss_epc, elps))
