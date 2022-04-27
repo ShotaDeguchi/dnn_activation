@@ -78,8 +78,8 @@ def main():
 
     # compare
     plt.figure(figsize=(4, 4))
-    plt.plot(x, y, marker="-", label="function", alpha=.7)
-    plt.plot(x_infer, y_infer, marker="--", label="dnn", alpha=.7)
+    plt.plot(x, y, label="function", alpha=.7, linestyle="-", c="k")
+    plt.plot(x_infer, y_infer, label="dnn", alpha=.7, linestyle="--", c="r")
     plt.xlim(-1.2, 1.2)
     plt.ylim(-1.2, 1.2)
     plt.grid(alpha=.5)
