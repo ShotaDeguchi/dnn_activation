@@ -17,7 +17,7 @@ def main():
     config_gpu(gpu_flg)
 
     # problem setup
-    p_id = 1
+    p_id = 2
     xmin = -1.
     xmax =  1.
     nx   = 100
@@ -37,7 +37,7 @@ def main():
 
     # prepare data
     x = np.linspace(xmin, xmax, nx)
-    x_train = np.linspace(xmin, xmax, int(nx / 5)).reshape(-1, 1)
+    x_train = np.linspace(xmin, xmax, int(nx / 10)).reshape(-1, 1)
     x_train = tf.convert_to_tensor(x_train, dtype=d_type)
     x_infer = np.linspace(xmin, xmax, nx).reshape(-1, 1)
     x_infer = tf.convert_to_tensor(x_infer, dtype=d_type)
@@ -54,12 +54,7 @@ def main():
     else:
         raise NotImplementedError(">>>>> p_id")
 
-    # perpare dataset
-    # x_train = np.linspace(xmin, xmax, int(nx / 5)).reshape(-1, 1)
-    # x_train = tf.convert_to_tensor(x_train, dtype=d_type)
-    # y_train = tf.sin(np.pi * x_train)
-
-    # define model
+    # define model, train, and infer relu model
     act = "relu"
     model_relu = DNN(
         x_train, y_train, 
@@ -68,6 +63,11 @@ def main():
         lr, opt, f_scl, 
         d_type, r_seed
     )
+    with tf.device("/device:GPU:0"):
+        model_relu.train(n_epc = int(1e4), n_btc = -1, c_tol = 1e-5)
+    y_relu = model_relu.infer(x_infer)
+
+    # define model, train, and infer tanh model
     act = "tanh"
     model_tanh = DNN(
         x_train, y_train, 
@@ -76,6 +76,11 @@ def main():
         lr, opt, f_scl, 
         d_type, r_seed
     )
+    with tf.device("/device:GPU:0"):
+        model_tanh.train(n_epc = int(1e4), n_btc = -1, c_tol = 1e-5)
+    y_tanh = model_tanh.infer(x_infer)
+
+    # define model, train, and infer swish model
     act = "swish"
     model_swish = DNN(
         x_train, y_train, 
@@ -84,18 +89,8 @@ def main():
         lr, opt, f_scl, 
         d_type, r_seed
     )
-
-    # train
-    with tf.device("/device:GPU:0"):
-        model_relu.train(n_epc = int(1e4), n_btc = -1, c_tol = 1e-5)
-    with tf.device("/device:GPU:0"):
-        model_tanh.train(n_epc = int(1e4), n_btc = -1, c_tol = 1e-5)
     with tf.device("/device:GPU:0"):
         model_swish.train(n_epc = int(1e4), n_btc = -1, c_tol = 1e-5)
-
-    # infer
-    y_relu = model_relu.infer(x_infer)
-    y_tanh = model_tanh.infer(x_infer)
     y_swish = model_swish.infer(x_infer)
 
     # compare
