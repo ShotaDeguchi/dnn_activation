@@ -57,7 +57,7 @@ def main():
     # perpare dataset
     # x_train = np.linspace(xmin, xmax, int(nx / 5)).reshape(-1, 1)
     # x_train = tf.convert_to_tensor(x_train, dtype=d_type)
-    y_train = tf.sin(np.pi * x_train)
+    # y_train = tf.sin(np.pi * x_train)
 
     # define model
     act = "swish"
@@ -78,8 +78,8 @@ def main():
 
     # compare
     plt.figure(figsize=(4, 4))
-    plt.scatter(x, y, marker=".", label="function")
-    plt.scatter(x_infer, y_infer, marker=".", label="dnn")
+    plt.plot(x, y, marker="-", label="function", alpha=.7)
+    plt.plot(x_infer, y_infer, marker="--", label="dnn", alpha=.7)
     plt.xlim(-1.2, 1.2)
     plt.ylim(-1.2, 1.2)
     plt.grid(alpha=.5)
