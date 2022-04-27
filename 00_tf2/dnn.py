@@ -105,7 +105,15 @@ class dnn_1D(tf.keras.Model):
         print("\n>>>>> act_func")
         print("         activation:", act)
         if act == "relu":
-            activation = tf.keras.activations.relu(x, alpha=0.0, max_value=None, threshold=0.0)
+            activation = tf.keras.activations.relu()
+        elif act == "elu":
+            activation = tf.keras.activations.elu()
+        elif act == "swish":
+            activation = tf.keras.activations.swish()
+        elif act == "tanh":
+            activation = tf.keras.activations.tanh()
+        elif act == "sin":
+            activation = tf.keras.activations.sin()
         else:
             raise NotImplementedError(">>>>> act_func")
         return activation

@@ -11,6 +11,7 @@ import argparse
 from dnn import *
 
 def __main__():
+    # argparse
     parser = argparse.ArgumentParser()
 
     parser.add_argument(
@@ -34,8 +35,7 @@ def __main__():
         help = "batch size"
     )
 
-    model = dnn_1D
-    model.train()
+    # infer
 
 if __name__ == "__main__":
     __main__()
