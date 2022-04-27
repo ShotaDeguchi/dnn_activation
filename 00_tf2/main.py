@@ -58,7 +58,7 @@ def main():
     else:
         raise NotImplementedError(">>>>> p_id")
 
-    # define, train, and infer relu model
+    # define, train, and infer with relu model
     act = "relu"
     model_relu = DNN(
         x_train, y_train, 
