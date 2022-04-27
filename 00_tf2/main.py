@@ -55,7 +55,7 @@ def main():
     # params
     f_in   = 1
     f_out  = 1
-    f_hid  = 2 ** 6
+    f_hid  = 2 ** 4
     depth  = 3
     w_init = "Glorot"
     b_init = "zeros"
