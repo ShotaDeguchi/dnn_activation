@@ -16,7 +16,7 @@ def main():
     config_gpu(gpu_flg = 1)
 
     # problem setup
-    p_id = 0
+    p_id = 2
     xmin = -1.
     xmax =  1.
     nx   = 2 ** 8
@@ -34,6 +34,7 @@ def main():
     d_type = "float32"
     r_seed = 1234
     n_epc  = int(5e4)
+    n_epc  = int(1e4)
     n_btc  = -1
     c_tol  = 1e-6
 
