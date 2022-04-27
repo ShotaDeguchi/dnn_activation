@@ -9,7 +9,7 @@ import time
 import numpy as np
 import tensorflow as tf
 
-class dnn_1D(tf.keras.Model):
+class DNN(tf.keras.Model):
     def __init__(
         self, 
         x, y, 
@@ -272,16 +272,4 @@ class dnn_1D(tf.keras.Model):
         print("\n>>>>> infer")
         y_ = self.dnn(x)
         return y_
-
-# class dnn_2D(tf.keras.Model):
-#     def __init__(
-#         self, 
-#         x, y, z, 
-#         f_in, f_out, f_hid, depth, 
-#         w_init, b_init, act, 
-#         lr = 5e-4, opt = "Adam", f_scl = "minmax", 
-#         d_type = "float32", r_seed = 1234
-#     ):
-#         # initialization
-
 

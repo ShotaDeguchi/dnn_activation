@@ -20,7 +20,3 @@ def func2(x):
     y = np.exp(x) * np.sin(4. * np.pi * x)
     return y
 
-def func3(x, y):
-    z = x * np.cos(2. * np.pi * x) + np.exp(y) 
-    return z
-

@@ -47,16 +47,6 @@ def main():
         plt.ylim(-2.5, 2.5)
         plt.grid(alpha=.5)
         plt.savefig("./figures/problem" + str(p_id) + ".jpg")
-    elif p_id == 3:
-        x = np.linspace(-1, 1, 100)
-        y = np.linspace(-1, 1, 100)
-        z = func3(x, y)
-        # plt.figure(figsize=(4, 4))
-        # plt.scatter(x, y, marker=".")
-        # plt.xlim(-1.2, 1.2)
-        # plt.ylim(-1.2, 1.2)
-        # plt.grid(alpha=.5)
-        plt.savefig("./figures/problem" + str(p_id) + ".jpg")
     else:
         raise NotImplementedError(">>>>> p_id")
 
@@ -83,7 +73,7 @@ def main():
     print(x_train.shape)
 
     # define model
-    model = dnn_1D(
+    model = DNN(
         x_train, y_train, 
         f_in, f_out, f_hid, depth, 
         w_init, b_init, act, 
