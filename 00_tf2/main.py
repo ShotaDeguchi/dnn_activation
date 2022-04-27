@@ -23,7 +23,7 @@ def main():
     xmax =  1.
     nx   = 100
 
-    p_id = 2
+    p_id = 0
     if p_id == 0:
         x = np.linspace(xmin, xmax, nx)
         y = func0(x)
@@ -61,7 +61,7 @@ def main():
     depth  = 4
     w_init = "Glorot"
     b_init = "zeros"
-    act    = "swish"
+    act    = "tanh"
     lr     = 5e-4
     opt    = "Adam"
     f_scl  = "minmax"
@@ -70,7 +70,7 @@ def main():
 
     # perpare dataset
     x_train = tf.random.uniform(
-        (10, 1), xmin, xmax, dtype=d_type
+        (30, 1), xmin, xmax, dtype=d_type
     )
     y_train = tf.sin(np.pi * x_train)
 
