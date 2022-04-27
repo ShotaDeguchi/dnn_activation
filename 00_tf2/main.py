@@ -88,6 +88,14 @@ def main():
     # infer
     x_infer = tf.cast(x, dtype=d_type)
     y_infer = model.infer(x_infer)
+    plt.figure(figsize=(4, 4))
+    plt.scatter(x, y, marker=".", label="function")
+    plt.scatter(x_infer, y_infer, marker=".", label="dnn")
+    plt.xlim(-1.2, 1.2)
+    plt.ylim(-1.2, 1.2)
+    plt.grid(alpha=.5)
+    plt.legend(loc = "upper right")
+    plt.savefig("./figures/problem" + str(p_id) + ".jpg")
 
 if __name__ == "__main__":
     main()
