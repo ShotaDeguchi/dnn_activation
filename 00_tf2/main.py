@@ -13,8 +13,7 @@ from dnn import *
 
 def main():
     # gpu configuration
-    gpu_flg = 1
-    config_gpu(gpu_flg)
+    config_gpu(gpu_flg = 1)
 
     # problem setup
     p_id = 0
