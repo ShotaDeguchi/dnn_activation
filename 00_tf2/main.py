@@ -20,7 +20,7 @@ def main():
     xmin = -1.
     xmax =  1.
     nx   = 100
-    p_id = 2
+    p_id = 0
 
     # params
     f_in   = 1
@@ -75,18 +75,36 @@ def main():
     y_infer = model.infer(x_infer)
 
     # compare
-    plt.figure(figsize=(4, 4))
-    plt.plot(x, y, label="function", alpha=.7, linestyle="-", c="k")
-    plt.plot(x_infer, y_infer, label="dnn", alpha=.7, linestyle="--", c="r")
-    plt.scatter(x_train, y_train, alpha=.7, marker="x", c="r")
-    plt.xlim(-1.2, 1.2)
-    if p_id == 0 or 1:
+    if p_id == 0:
+        plt.figure(figsize=(4, 4))
+        plt.plot(x, y, label="function", alpha=.7, linestyle="-", c="k")
+        plt.plot(x_infer, y_infer, label="dnn", alpha=.7, linestyle="--", c="r")
+        plt.scatter(x_train, y_train, alpha=.7, marker="x", c="r")
+        plt.xlim(-1.2, 1.2)
         plt.ylim(-1.2, 1.2)
+        plt.grid(alpha=.5)
+        plt.legend(loc="upper left")
+        plt.savefig("./figures/problem" + str(p_id) + ".jpg")
+    elif p_id == 1:
+        plt.figure(figsize=(4, 4))
+        plt.plot(x, y, label="function", alpha=.7, linestyle="-", c="k")
+        plt.plot(x_infer, y_infer, label="dnn", alpha=.7, linestyle="--", c="r")
+        plt.scatter(x_train, y_train, alpha=.7, marker="x", c="r")
+        plt.xlim(-1.2, 1.2)
+        plt.ylim(-1.2, 1.2)
+        plt.grid(alpha=.5)
+        plt.legend(loc="upper left")
+        plt.savefig("./figures/problem" + str(p_id) + ".jpg")
     elif p_id == 2:
-        plt.ylim(-2.5, 2.5)
-    plt.grid(alpha=.5)
-    plt.legend(loc="upper left")
-    plt.savefig("./figures/problem" + str(p_id) + ".jpg")
+        plt.figure(figsize=(4, 4))
+        plt.plot(x, y, label="function", alpha=.7, linestyle="-", c="k")
+        plt.plot(x_infer, y_infer, label="dnn", alpha=.7, linestyle="--", c="r")
+        plt.scatter(x_train, y_train, alpha=.7, marker="x", c="r")
+        plt.xlim(-1.2, 1.2)
+        plt.ylim(-1.2, 1.2)
+        plt.grid(alpha=.5)
+        plt.legend(loc="upper left")
+        plt.savefig("./figures/problem" + str(p_id) + ".jpg")
 
 if __name__ == "__main__":
     main()
