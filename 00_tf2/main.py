@@ -17,7 +17,7 @@ def main():
     config_gpu(gpu_flg)
 
     # problem setup
-    p_id = 0
+    p_id = 1
     xmin = -1.
     xmax =  1.
     nx   = 2 ** 8
@@ -36,7 +36,7 @@ def main():
     r_seed = 1234
     n_epc  = int(5e4)
     n_btc  = -1
-    c_tol  = 1e-8
+    c_tol  = 1e-6
 
     # prepare data
     x = np.linspace(xmin, xmax, nx)
@@ -106,7 +106,7 @@ def main():
     # compare
     if p_id == 0:
         plt.figure(figsize=(6, 6))
-        plt.plot(x, y, label="function", alpha=.7, linestyle="-", lw = 3, c="k")
+        plt.plot(x, y, label="function", alpha=.3, linestyle="-", lw = 5, c="k")
         plt.scatter(x_train, y_train, alpha=.7, marker="x", c="r")
         plt.plot(x_infer, y_relu, label="relu", alpha=.7, linestyle="--")
         plt.plot(x_infer, y_tanh, label="tanh", alpha=.7, linestyle="--")
@@ -118,7 +118,7 @@ def main():
         plt.savefig("./figures/problem" + str(p_id) + ".png")
     elif p_id == 1:
         plt.figure(figsize=(6, 6))
-        plt.plot(x, y, label="function", alpha=.7, linestyle="-", lw = 3, c="k")
+        plt.plot(x, y, label="function", alpha=.3, linestyle="-", lw = 5, c="k")
         plt.scatter(x_train, y_train, alpha=.7, marker="x", c="r")
         plt.plot(x_infer, y_relu, label="relu", alpha=.7, linestyle="--")
         plt.plot(x_infer, y_tanh, label="tanh", alpha=.7, linestyle="--")
@@ -130,7 +130,7 @@ def main():
         plt.savefig("./figures/problem" + str(p_id) + ".png")
     elif p_id == 2:
         plt.figure(figsize=(6, 6))
-        plt.plot(x, y, label="function", alpha=.7, linestyle="-", lw = 3, c="k")
+        plt.plot(x, y, label="function", alpha=.3, linestyle="-", lw = 5, c="k")
         plt.scatter(x_train, y_train, alpha=.7, marker="x", c="r")
         plt.plot(x_infer, y_relu, label="relu", alpha=.7, linestyle="--")
         plt.plot(x_infer, y_tanh, label="tanh", alpha=.7, linestyle="--")
