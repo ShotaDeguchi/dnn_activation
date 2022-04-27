@@ -42,7 +42,7 @@ class dnn_1D(tf.keras.Model):
         XY = tf.concat([x, y], 1)
         self.lower = tf.cast(tf.reduce_min(XY, axis = 0), dtype=self.d_type)
         self.upper = tf.cast(tf.reduce_max(XY, axis = 0), dtype=self.d_type)
-        self.mean = tf.cast(tf.reduce_mean(XY, axis = 0), dtype=self.d_type)
+        self.mean  = tf.cast(tf.reduce_mean(XY, axis = 0), dtype=self.d_type)
 
         # build a deep neural network
         self.w_init = self.weight_init(self.w_init, self.r_seed)
@@ -54,6 +54,7 @@ class dnn_1D(tf.keras.Model):
         )
         self.optimizer = self.opt_alg(self.lr, self.opt)
         self.loss_log = []
+        self.save_path = "./saved_model/"
 
         # print some key settings
         print("\n************************************************************")
@@ -220,7 +221,7 @@ class dnn_1D(tf.keras.Model):
             print("\n>>>>> executing full-batch training")
             for epc in range(n_epc):
                 loss_epc = 0.
-                loss_epc = self.loss(self.x, self.y)
+                loss_epc = self.loss_func(self.x, self.y)
                 self.loss_log.append(loss_epc)
 
                 # monitor 
@@ -232,44 +233,45 @@ class dnn_1D(tf.keras.Model):
 
                 # save 
                 if epc % 100 == 0:
-                    # ......
-                    model.save(...)
+                    self.save(self.save_path + "model" + str(epc))
 
                 # terminate if converged
                 if loss_epc < c_tol:
                     print(">>>>> converging to the tolerance")
                     break
 
-        else:
-            print("\n>>>>> executing mini-batch training")
-            n_itr = ...
-            for epc in range(n_epc):
-                loss_epc = 0.
-                for idx in range(0, n_itr, n_btc):
-                    loss_btc = self.loss_loglb()
-                loss_epc += loss_btc / int(n_itr / n_btc)
+        # else:
+        #     print("\n>>>>> executing mini-batch training")
+        #     n_itr = ...
+        #     for epc in range(n_epc):
+        #         loss_epc = 0.
+        #         for idx in range(0, n_itr, n_btc):
+        #             loss_btc = self.loss_loglb()
+        #         loss_epc += loss_btc / int(n_itr / n_btc)
 
-                # monitor 
-                if epc % 10 == 0:
-                    elps = time.time() - t0
-                    print("epc: %d, loss: %.6e, elps: %.3f"
-                        % (epc, loss_epc, elps))
-                    t0 = time.time()
+        #         # monitor 
+        #         if epc % 10 == 0:
+        #             elps = time.time() - t0
+        #             print("epc: %d, loss: %.6e, elps: %.3f"
+        #                 % (epc, loss_epc, elps))
+        #             t0 = time.time()
 
-                # save 
-                if epc % 100 == 0:
-                    # ......
-                    model.save(...)
+        #         # save 
+        #         if epc % 100 == 0:
+        #             # ......
+        #             model.save(...)
 
-                # terminate if converged
-                if loss_epc < c_tol:
-                    print(">>>>> converging to the tolerance")
-                    break
+        #         # terminate if converged
+        #         if loss_epc < c_tol:
+        #             print(">>>>> converging to the tolerance")
+        #             break
 
     def infer(
         self, x
     ):
         print("\n>>>>> infer")
+        y_ = self.dnn(x)
+        return y_
 
 # class dnn_2D(tf.keras.Model):
 #     def __init__(
