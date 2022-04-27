@@ -61,7 +61,7 @@ def main():
     depth  = 4
     w_init = "Glorot"
     b_init = "zeros"
-    act    = "tanh"
+    act    = "relu"
     lr     = 5e-4
     opt    = "Adam"
     f_scl  = "minmax"
