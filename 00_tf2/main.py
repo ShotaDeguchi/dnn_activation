@@ -64,13 +64,17 @@ def main():
     act    = "relu"
     lr     = 5e-4
     opt    = "Adam"
-    f_scl  = "linear"
+    f_scl  = "minmax"
     d_type = "float32"
     r_seed = 1234
 
     # perpare dataset
-    x_train = np.linspace(xmin, xmax, int(nx / 5))
-    x_train = tf.cast(x_train, dtype=d_type)
+    # x_train = tf.random.uniform(
+    #     (30, 1), xmin, xmax, dtype=d_type
+    # )
+    x_train = tf.linspace(
+        xmin, xmax, int(nx / 10)
+    )
     y_train = tf.sin(np.pi * x_train)
 
     # define model
