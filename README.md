@@ -7,12 +7,6 @@ Activation functions are essential to introduce non-linearity to DNNs i.e. DNN a
 ## Example
 ReLU network has zig-zag inference result, while others (tanh & Swish) have smooth approximations. This is triggered by their characteristics, to be exact, ReLU has C^0 continuity, tanh and Swish C^inf. 
 
-Qantitative comparison between FDM and PINN is:
-|activation|tanh|ReLU|Swish|
-|:---:|:---:|:---:|:---:|
-|MSE (scale: 1e-3)|:---:|:---:|:---:|
-|MSE (scale: 1e-3)|:---:|:---:|:---:|
-
 <img src="./00_tf2/figures/approx_problem1.png">
 
 
