@@ -26,9 +26,8 @@ def main():
     # params
     f_in   = 1
     f_out  = 1
-    f_hid  = 5
+    f_hid  = 2 ** 4
     depth  = 4
-    w_init = "Glorot"
     b_init = "zeros"
     lr     = 5e-4
     opt    = "Adam"
@@ -59,6 +58,7 @@ def main():
         raise NotImplementedError(">>>>> p_id")
 
     # define, train, and infer with relu model
+    w_init = "He"
     act = "relu"
     model_relu = DNN(
         x_train, y_train, 
@@ -73,6 +73,7 @@ def main():
     y_relu = model_relu.infer(x_infer)
 
     # tanh model
+    w_init = "Glorot"
     act = "tanh"
     model_tanh = DNN(
         x_train, y_train, 
@@ -86,6 +87,7 @@ def main():
     y_tanh = model_tanh.infer(x_infer)
 
     # swish model
+    w_init = "He"
     act = "swish"
     model_swish = DNN(
         x_train, y_train, 
