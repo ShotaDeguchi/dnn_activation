@@ -6,7 +6,7 @@ Activation functions are essential to introduce non-linearity to DNNs i.e. DNN a
 
 ## Example
 snapshots from examples. 
-<img src="./figures/approx_problem1.png">
+<img src="./00_tf2/figures/approx_problem1.png">
 
 
 ## Reference
