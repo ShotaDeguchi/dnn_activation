@@ -17,7 +17,7 @@ def main():
     config_gpu(gpu_flg)
 
     # problem setup
-    p_id = 2
+    p_id = 0
     xmin = -1.
     xmax =  1.
     nx   = 100
@@ -26,6 +26,8 @@ def main():
     f_in   = 1
     f_out  = 1
     f_hid  = 2 ** 4
+    depth  = 3
+    f_hid  = 5
     depth  = 3
     w_init = "Glorot"
     b_init = "zeros"
@@ -37,7 +39,7 @@ def main():
 
     # prepare data
     x = np.linspace(xmin, xmax, nx)
-    x_train = np.linspace(xmin, xmax, int(nx / 10)).reshape(-1, 1)
+    x_train = np.linspace(xmin, xmax, int(nx / 5)).reshape(-1, 1)
     x_train = tf.convert_to_tensor(x_train, dtype=d_type)
     x_infer = np.linspace(xmin, xmax, nx).reshape(-1, 1)
     x_infer = tf.convert_to_tensor(x_infer, dtype=d_type)
