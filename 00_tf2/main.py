@@ -20,8 +20,8 @@ def main():
     p_id = 1
     xmin = -1.
     xmax =  1.
-    nx   = 100
-    nx_  = int(nx / 5)
+    nx   = 2 ** 8
+    nx_  = 2 ** 4
 
     # params
     f_in   = 1
