@@ -35,6 +35,7 @@ def main():
     d_type = "float32"
     r_seed = 1234
     n_epc  = int(5e4)
+    n_epc  = int(1e3)
     n_btc  = -1
     c_tol  = 1e-6
 
@@ -71,7 +72,6 @@ def main():
         model_relu.train(n_epc, n_btc, c_tol)
     # model_relu.save("./saved_model/model_relu")
     y_relu = model_relu.infer(x_infer)
-    del model_relu
 
     # tanh model
     w_init = "Glorot"
@@ -86,7 +86,6 @@ def main():
     with tf.device("/device:GPU:0"):
         model_tanh.train(n_epc, n_btc, c_tol)
     y_tanh = model_tanh.infer(x_infer)
-    del model_tanh
 
     # swish model
     w_init = "He"
@@ -101,7 +100,6 @@ def main():
     with tf.device("/device:GPU:0"):
         model_swish.train(n_epc, n_btc, c_tol)
     y_swish = model_swish.infer(x_infer)
-    del model_swish
 
     # compare
     if p_id == 0:
@@ -111,11 +109,25 @@ def main():
         plt.plot(x_infer, y_relu, label="relu", alpha=.7, linestyle="--")
         plt.plot(x_infer, y_tanh, label="tanh", alpha=.7, linestyle="--")
         plt.plot(x_infer, y_swish, label="swish", alpha=.7, linestyle="--")
+        plt.xlabel("x")
+        plt.ylabel("y")
         plt.xlim(-1.2, 1.2)
         plt.ylim(-1.2, 1.2)
         plt.grid(alpha=.5)
         plt.legend(loc="upper left")
-        plt.savefig("./figures/problem" + str(p_id) + ".png")
+        plt.savefig("./figures/approx_problem" + str(p_id) + ".png")
+
+        plt.figure(figsize=(8, 4))
+        plt.plot(model_relu.loss_log, label="relu", alpha=.7, linestyle="--")
+        plt.plot(model_tanh.loss_log, label="tanh", alpha=.7, linestyle="--")
+        plt.plot(model_swish.loss_log, label="swish", alpha=.7, linestyle="--")
+        plt.xlabel("epoch")
+        plt.ylabel("loss")
+        plt.yscale("log")
+        plt.grid(alpha=.5)
+        plt.legend(loc="upper right")
+        plt.savefig("./figures/loss_problem" + str(p_id) + ".png")
+
     elif p_id == 1:
         plt.figure(figsize=(6, 6))
         plt.plot(x, y, label="function", alpha=.3, linestyle="-", lw = 5, c="k")
@@ -123,11 +135,25 @@ def main():
         plt.plot(x_infer, y_relu, label="relu", alpha=.7, linestyle="--")
         plt.plot(x_infer, y_tanh, label="tanh", alpha=.7, linestyle="--")
         plt.plot(x_infer, y_swish, label="swish", alpha=.7, linestyle="--")
+        plt.xlabel("x")
+        plt.ylabel("y")
         plt.xlim(-1.2, 1.2)
         plt.ylim(-1.2, 1.2)
         plt.grid(alpha=.5)
         plt.legend(loc="upper left")
-        plt.savefig("./figures/problem" + str(p_id) + ".png")
+        plt.savefig("./figures/approx_problem" + str(p_id) + ".png")
+
+        plt.figure(figsize=(8, 4))
+        plt.plot(model_relu.loss_log, label="relu", alpha=.7, linestyle="--")
+        plt.plot(model_tanh.loss_log, label="tanh", alpha=.7, linestyle="--")
+        plt.plot(model_swish.loss_log, label="swish", alpha=.7, linestyle="--")
+        plt.xlabel("epoch")
+        plt.ylabel("loss")
+        plt.yscale("log")
+        plt.grid(alpha=.5)
+        plt.legend(loc="upper right")
+        plt.savefig("./figures/loss_problem" + str(p_id) + ".png")
+
     elif p_id == 2:
         plt.figure(figsize=(6, 6))
         plt.plot(x, y, label="function", alpha=.3, linestyle="-", lw = 5, c="k")
@@ -135,11 +161,24 @@ def main():
         plt.plot(x_infer, y_relu, label="relu", alpha=.7, linestyle="--")
         plt.plot(x_infer, y_tanh, label="tanh", alpha=.7, linestyle="--")
         plt.plot(x_infer, y_swish, label="swish", alpha=.7, linestyle="--")
+        plt.xlabel("x")
+        plt.ylabel("y")
         plt.xlim(-1.2, 1.2)
         plt.ylim(-2.5, 2.5)
         plt.grid(alpha=.5)
         plt.legend(loc="upper left")
-        plt.savefig("./figures/problem" + str(p_id) + ".png")
+        plt.savefig("./figures/approx_problem" + str(p_id) + ".png")
+
+        plt.figure(figsize=(8, 4))
+        plt.plot(model_relu.loss_log, label="relu", alpha=.7, linestyle="--")
+        plt.plot(model_tanh.loss_log, label="tanh", alpha=.7, linestyle="--")
+        plt.plot(model_swish.loss_log, label="swish", alpha=.7, linestyle="--")
+        plt.xlabel("epoch")
+        plt.ylabel("loss")
+        plt.yscale("log")
+        plt.grid(alpha=.5)
+        plt.legend(loc="upper right")
+        plt.savefig("./figures/loss_problem" + str(p_id) + ".png")
 
 if __name__ == "__main__":
     main()
