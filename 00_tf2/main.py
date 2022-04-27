@@ -64,7 +64,7 @@ def main():
     act    = "relu"
     lr     = 5e-4
     opt    = "Adam"
-    f_scl  = "minmax"
+    f_scl  = "linear"
     d_type = "float32"
     r_seed = 1234
 
