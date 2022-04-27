@@ -182,6 +182,7 @@ class dnn_1D(tf.keras.Model):
         if n_btc == -1:
             print("\n>>>>> executing full-batch training")
             for epc in range(n_epc):
+                loss_epc = 0.
                 loss_epc = self.loss_glb(...)
                 self.loss_log.append(loss_epc)
 
@@ -199,7 +200,7 @@ class dnn_1D(tf.keras.Model):
                     model.save(...)
 
                 # terminate if converged
-                if loss_e < c_tol:
+                if loss_epc < c_tol:
                     print(">>>>> converging to the tolerance")
                     break
 
@@ -207,9 +208,29 @@ class dnn_1D(tf.keras.Model):
             print("\n>>>>> executing mini-batch training")
             n_itr = ...
             for epc in range(n_epc):
+                loss_epc = 0.
                 for idx in range(0, n_itr, n_btc):
+                    loss_btc = self.loss_loglb()
+                loss_epc += loss_btc / int(n_itr / n_btc)
 
 
+
+                # monitor 
+                if epc % 10 == 0:
+                    elps = time.time() - t0
+                    print("epc: %d, loss: %.6e, elps: %.3f"
+                        % (epc, loss_epc, elps))
+                    t0 = time.time()
+
+                # save 
+                if epc % 100 == 0:
+                    # ......
+                    model.save(...)
+
+                # terminate if converged
+                if loss_epc < c_tol:
+                    print(">>>>> converging to the tolerance")
+                    break
 
     def infer(
         self, x
