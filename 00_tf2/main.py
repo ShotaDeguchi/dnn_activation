@@ -82,9 +82,11 @@ def main():
         lr, opt, f_scl, 
         d_type, r_seed
     )
+
     # train
     with tf.device("/device:GPU:0"):
         model.train(n_epc = int(1e4), n_btc = -1, c_tol = 1e-5)
+
     # infer
     x_infer = tf.cast(x, dtype=d_type)
     y_infer = model.infer(x_infer)
@@ -94,7 +96,7 @@ def main():
     plt.xlim(-1.2, 1.2)
     plt.ylim(-1.2, 1.2)
     plt.grid(alpha=.5)
-    plt.legend(loc = "upper right")
+    plt.legend(loc="upper left")
     plt.savefig("./figures/problem" + str(p_id) + ".jpg")
 
 if __name__ == "__main__":

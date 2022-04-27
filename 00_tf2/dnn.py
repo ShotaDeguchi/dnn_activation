@@ -209,6 +209,7 @@ class DNN(tf.keras.Model):
     ):
         loss, grad = self.loss_grad(x, y)
         self.optimizer.apply_gradients(zip(grad, self.dnn.trainable_variables))
+        return loss
 
     def train(
         self, n_epc, n_btc, c_tol
@@ -223,7 +224,7 @@ class DNN(tf.keras.Model):
             print(">>>>> executing full-batch training")
             for epc in range(n_epc):
                 loss_epc = 0.
-                loss_epc = self.loss_func(self.x, self.y)
+                loss_epc = self.grad_desc(self.x, self.y)
                 self.loss_log.append(loss_epc)
 
                 # monitor 
