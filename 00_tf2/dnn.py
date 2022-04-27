@@ -19,6 +19,7 @@ class DNN(tf.keras.Model):
         d_type = "float32", r_seed = 1234
     ):
         # initialization
+        super().__init__()
         self.f_in   = f_in     # input features
         self.f_out  = f_out    # output features
         self.f_hid  = f_hid    # hidden layer dim
@@ -47,7 +48,7 @@ class DNN(tf.keras.Model):
         # build a deep neural network
         self.w_init = self.weight_init(self.w_init, self.r_seed)
         self.b_init = self.bias_init(self.b_init)
-        self.act    = self.act_func(self.act)
+        # self.act    = self.act_func(self.act)
         self.dnn = self.dnn_init(
             self.f_in, self.f_out, self.f_hid, self.depth, 
             self.w_init, self.b_init, self.act
@@ -64,7 +65,7 @@ class DNN(tf.keras.Model):
     def type_seed(
         self, d_type, r_seed
     ):
-        print("\n>>>>> type_seed")
+        print(">>>>> type_seed")
         print("         data type  :", d_type)
         print("         random seed:", r_seed)
         os.environ["PYTHONHASHSEED"] = str(r_seed)
@@ -75,7 +76,7 @@ class DNN(tf.keras.Model):
     def weight_init(
         self, init, seed
     ):
-        print("\n>>>>> weight_init")
+        print(">>>>> weight_init")
         print("         initializer:", init)
         if init == "Glorot":
             weight = tf.keras.initializers.GlorotNormal(seed = seed)
@@ -90,7 +91,7 @@ class DNN(tf.keras.Model):
     def bias_init(
         self, init
     ):
-        print("\n>>>>> bias_init")
+        print(">>>>> bias_init")
         print("         initializer:", init)
         if init == "zeros":
             bias = tf.keras.initializers.Zeros()
@@ -103,7 +104,7 @@ class DNN(tf.keras.Model):
     def act_func(
         self, act
     ):
-        print("\n>>>>> act_func")
+        print(">>>>> act_func")
         print("         activation:", act)
         if act == "relu":
             activation = tf.keras.activations.relu()
@@ -124,7 +125,7 @@ class DNN(tf.keras.Model):
         f_in, f_out, f_hid, depth,
         w_init, b_init, act
     ):
-        print("\n>>>>> dnn_init")
+        print(">>>>> dnn_init")
         print("         f_in :", f_in)
         print("         f_out:", f_out)
         print("         f_hid:", f_hid)
@@ -155,7 +156,7 @@ class DNN(tf.keras.Model):
             dnn.add(
                 tf.keras.layers.Dense(
                     f_hid, activation = act, use_bias = True, 
-                    kernel_initializer = w_init, bias_init = b_init, 
+                    kernel_initializer = w_init, bias_initializer = b_init, 
                     kernel_regularizer = None, bias_regularizer = None, 
                     activity_regularizer = None, kernel_constraint = None, bias_constraint = None
                 )
@@ -166,7 +167,7 @@ class DNN(tf.keras.Model):
     def opt_alg(
         self, lr, opt
     ):
-        print("\n>>>>> opt_alg")
+        print(">>>>> opt_alg")
         print("         learning rate:", lr)
         print("         optimizer    :", opt)
         if opt == "SGD":
@@ -211,14 +212,14 @@ class DNN(tf.keras.Model):
     def train(
         self, n_epc, n_btc, c_tol
     ):
-        print("\n>>>>> train")
+        print(">>>>> train")
         print("         n_epoch:", n_epc)
         print("         n_batch:", n_btc)
         print("         c_tlrnc:", c_tol)
 
         t0 = time.time()
         if n_btc == -1:
-            print("\n>>>>> executing full-batch training")
+            print(">>>>> executing full-batch training")
             for epc in range(n_epc):
                 loss_epc = 0.
                 loss_epc = self.loss_func(self.x, self.y)
@@ -269,7 +270,7 @@ class DNN(tf.keras.Model):
     def infer(
         self, x
     ):
-        print("\n>>>>> infer")
+        print(">>>>> infer")
         y_ = self.dnn(x)
         return y_
 

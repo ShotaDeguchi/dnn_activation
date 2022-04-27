@@ -18,10 +18,14 @@ def main():
     gpu_flg = 1
     config_gpu(gpu_flg)
 
-    # problem id
+    # problem setup
+    xmin = -1.
+    xmax =  1.
+    nx   = 100
+
     p_id = 2
     if p_id == 0:
-        x = np.linspace(-1, 1, 100)
+        x = np.linspace(xmin, xmax, nx)
         y = func0(x)
         plt.figure(figsize=(4, 4))
         plt.scatter(x, y, marker=".")
@@ -30,7 +34,7 @@ def main():
         plt.grid(alpha=.5)
         plt.savefig("./figures/problem" + str(p_id) + ".jpg")
     elif p_id == 1:
-        x = np.linspace(-1, 1, 100)
+        x = np.linspace(xmin, xmax, nx)
         y = func1(x)
         plt.figure(figsize=(4, 4))
         plt.scatter(x, y, marker=".")
@@ -39,7 +43,7 @@ def main():
         plt.grid(alpha=.5)
         plt.savefig("./figures/problem" + str(p_id) + ".jpg")
     elif p_id == 2:
-        x = np.linspace(-1, 1, 100)
+        x = np.linspace(xmin, xmax, nx)
         y = func2(x)
         plt.figure(figsize=(4, 4))
         plt.scatter(x, y, marker=".")
@@ -64,13 +68,11 @@ def main():
     d_type = "float32"
     r_seed = 1234
 
-    x = x.reshape(-1, 1)
-
-    x_train = tf.cast(x, dtype=d_type)
-    y_train = tf.cast(y, dtype=d_type)
-
-    print(x.shape)
-    print(x_train.shape)
+    # perpare dataset
+    x_train = tf.random.uniform(
+        (10, 1), xmin, xmax, dtype=d_type
+    )
+    y_train = tf.sin(np.pi * x_train)
 
     # define model
     model = DNN(
@@ -81,11 +83,10 @@ def main():
         d_type, r_seed
     )
     # train
-    # with tf.device("/device:CPU:0"):
     with tf.device("/device:GPU:0"):
         model.train(n_epc = int(1e3), n_btc = -1, c_tol = 1e-5)
     # infer
-    model.infer(x)
+    y_infer = model.infer(x_infer)
 
 if __name__ == "__main__":
     main()
