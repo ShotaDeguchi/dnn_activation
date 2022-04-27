@@ -57,7 +57,7 @@ class dnn_1D(tf.keras.Model):
 
         # print some key settings
         print("\n************************************************************")
-        print("****************     MAIN PROGRAM START     ****************")
+        print("********************     DELLO WORLD     *******************")
         print("************************************************************")
 
     def type_seed(
@@ -113,7 +113,7 @@ class dnn_1D(tf.keras.Model):
         elif act == "tanh":
             activation = tf.keras.activations.tanh()
         elif act == "sin":
-            activation = tf.keras.activations.sin()
+            activation = tf.math.sin()
         else:
             raise NotImplementedError(">>>>> act_func")
         return activation
@@ -182,6 +182,31 @@ class dnn_1D(tf.keras.Model):
             raise NotImplementedError(">>>>> opt_alg")
         return optimizer
 
+    @tf.function
+    def loss_func(
+        self, x, y
+    ):
+        y_ = self.dnn(x)
+        loss = tf.reduce_mean(tf.square(y - y_))
+        return loss
+
+    @tf.function
+    def loss_grad(
+        self, x, y
+    ):
+        with tf.GradientTape(persistent=True) as tp:
+            loss = self.loss_func(x, y)
+        grad = tp.gradient(loss, self.dnn.trainable_variables)
+        del tp
+        return loss, grad
+
+    @tf.function
+    def grad_desc(
+        self, x, y
+    ):
+        loss, grad = self.loss_grad(x, y)
+        self.optimizer.apply_gradients(zip(grad, self.dnn.trainable_variables))
+
     def train(
         self, n_epc, n_btc, c_tol
     ):
@@ -195,9 +220,8 @@ class dnn_1D(tf.keras.Model):
             print("\n>>>>> executing full-batch training")
             for epc in range(n_epc):
                 loss_epc = 0.
-                loss_epc = self.loss_glb(...)
+                loss_epc = self.loss(self.x, self.y)
                 self.loss_log.append(loss_epc)
-
 
                 # monitor 
                 if epc % 10 == 0:
@@ -224,8 +248,6 @@ class dnn_1D(tf.keras.Model):
                 for idx in range(0, n_itr, n_btc):
                     loss_btc = self.loss_loglb()
                 loss_epc += loss_btc / int(n_itr / n_btc)
-
-
 
                 # monitor 
                 if epc % 10 == 0:
