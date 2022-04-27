@@ -70,10 +70,12 @@ def main():
     x_train = tf.random.uniform(
         (10, 1), xmin, xmax, dtype=d_type
     )
-    # x_train = np.linspace(xmin, xmax, int(nx / 5))
-    # x_train = x_train.reshape(-1, 1)
-    # x_train = tf.convert_to_tensor(x_train)
+    x_train = np.linspace(xmin, xmax, int(nx / 5))
+    x_train = x_train.reshape(-1, 1)
+    x_train = tf.convert_to_tensor(x_train)
     y_train = tf.sin(np.pi * x_train)
+    print("x_train.shape", x_train.shape)
+    print("y_train.shape", y_train.shape)
 
     # define model
     model = DNN(
