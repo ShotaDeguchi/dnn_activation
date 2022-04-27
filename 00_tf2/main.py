@@ -84,7 +84,7 @@ def main():
     )
     # train
     with tf.device("/device:GPU:0"):
-        model.train(n_epc = int(1e5), n_btc = -1, c_tol = 1e-5)
+        model.train(n_epc = int(1e4), n_btc = -1, c_tol = 1e-5)
     # infer
     x_infer = tf.cast(x, dtype=d_type)
     y_infer = model.infer(x_infer)

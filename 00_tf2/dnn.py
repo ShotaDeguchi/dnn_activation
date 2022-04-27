@@ -53,6 +53,7 @@ class DNN(tf.keras.Model):
             self.f_in, self.f_out, self.f_hid, self.depth, 
             self.w_init, self.b_init, self.act
         )
+        self.params = self.dnn.trainable_variables
         self.optimizer = self.opt_alg(self.lr, self.opt)
         self.loss_log = []
         self.save_path = "./saved_model/"
@@ -130,22 +131,22 @@ class DNN(tf.keras.Model):
         print("         f_out:", f_out)
         print("         f_hid:", f_hid)
         print("         depth:", depth)
-        dnn = tf.keras.Sequential()
-        dnn.add(tf.keras.layers.InputLayer(f_in))
+        network = tf.keras.Sequential()
+        network.add(tf.keras.layers.InputLayer(f_in))
         if self.f_scl == "linear" or None:
-            dnn.add(
+            network.add(
                 tf.keras.layers.Lambda(
                     lambda x: x
                 )
             )
         elif self.f_scl == "minmax":
-            dnn.add(
+            network.add(
                 tf.keras.layers.Lambda(
                     lambda x: 2. * (x - self.lower) / (self.upper - self.lower) - 1.
                 )
             )
         elif self.f_scl == "mean":
-            dnn.add(
+            network.add(
                 tf.keras.layers.Lambda(
                     lambda x: (x - self.mean) / (self.upper - self.lower)
                 )
@@ -153,7 +154,7 @@ class DNN(tf.keras.Model):
         else:
             raise NotImplementedError(">>>>> dnn_init")
         for l in range(depth - 1):
-            dnn.add(
+            network.add(
                 tf.keras.layers.Dense(
                     f_hid, activation = act, use_bias = True, 
                     kernel_initializer = w_init, bias_initializer = b_init, 
@@ -161,8 +162,8 @@ class DNN(tf.keras.Model):
                     activity_regularizer = None, kernel_constraint = None, bias_constraint = None
                 )
             )
-        dnn.add(tf.keras.layers.Dense(f_out, activation = "linear"))
-        return dnn
+        network.add(tf.keras.layers.Dense(f_out, activation = "linear"))
+        return network
 
     def opt_alg(
         self, lr, opt
