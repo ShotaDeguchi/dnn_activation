@@ -58,7 +58,7 @@ def main():
     f_in   = 1
     f_out  = 1
     f_hid  = 2 ** 6
-    depth  = 4
+    depth  = 3
     w_init = "Glorot"
     b_init = "zeros"
     act    = "relu"
@@ -69,12 +69,12 @@ def main():
     r_seed = 1234
 
     # perpare dataset
-    # x_train = tf.random.uniform(
-    #     (30, 1), xmin, xmax, dtype=d_type
-    # )
-    x_train = tf.linspace(
-        xmin, xmax, int(nx / 10)
+    x_train = tf.random.uniform(
+        (30, 1), xmin, xmax, dtype=d_type
     )
+    # x_train = tf.linspace(
+    #     xmin, xmax, int(nx / 10)
+    # )
     y_train = tf.sin(np.pi * x_train)
 
     # define model
