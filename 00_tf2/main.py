@@ -27,7 +27,7 @@ def main():
     f_in   = 1
     f_out  = 1
     f_hid  = 2 ** 4
-    depth  = 4
+    depth  = 3
     b_init = "zeros"
     lr     = 5e-4
     opt    = "Adam"
@@ -71,6 +71,7 @@ def main():
         model_relu.train(n_epc, n_btc, c_tol)
     # model_relu.save("./saved_model/model_relu")
     y_relu = model_relu.infer(x_infer)
+    del model_relu
 
     # tanh model
     w_init = "Glorot"
@@ -85,6 +86,7 @@ def main():
     with tf.device("/device:GPU:0"):
         model_tanh.train(n_epc, n_btc, c_tol)
     y_tanh = model_tanh.infer(x_infer)
+    del model_tanh
 
     # swish model
     w_init = "He"
@@ -99,6 +101,7 @@ def main():
     with tf.device("/device:GPU:0"):
         model_swish.train(n_epc, n_btc, c_tol)
     y_swish = model_swish.infer(x_infer)
+    del model_swish
 
     # compare
     if p_id == 0:
