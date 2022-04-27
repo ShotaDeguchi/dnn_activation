@@ -17,10 +17,10 @@ def main():
     config_gpu(gpu_flg)
 
     # problem setup
+    p_id = 1
     xmin = -1.
     xmax =  1.
     nx   = 100
-    p_id = 0
 
     # params
     f_in   = 1
@@ -71,8 +71,6 @@ def main():
     # train
     with tf.device("/device:GPU:0"):
         model_relu.train(n_epc = int(1e4), n_btc = -1, c_tol = 1e-5)
-    # infer
-    y_relu = model_relu.infer(x_infer)
 
     # define model
     act = "tanh"
@@ -86,8 +84,6 @@ def main():
     # train
     with tf.device("/device:GPU:0"):
         model_tanh.train(n_epc = int(1e4), n_btc = -1, c_tol = 1e-5)
-    # infer
-    y_tanh = model_tanh.infer(x_infer)
 
     # define model
     act = "swish"
@@ -101,12 +97,15 @@ def main():
     # train
     with tf.device("/device:GPU:0"):
         model_swish.train(n_epc = int(1e4), n_btc = -1, c_tol = 1e-5)
+
     # infer
+    y_relu = model_relu.infer(x_infer)
+    y_tanh = model_tanh.infer(x_infer)
     y_swish = model_swish.infer(x_infer)
 
     # compare
     if p_id == 0:
-        plt.figure(figsize=(4, 4))
+        plt.figure(figsize=(6, 6))
         plt.plot(x, y, label="function", alpha=.7, linestyle="-", lw = 3, c="k")
         plt.scatter(x_train, y_train, alpha=.7, marker="x", c="r")
         plt.plot(x_infer, y_relu, label="relu", alpha=.7, linestyle="--")
@@ -118,7 +117,7 @@ def main():
         plt.legend(loc="upper left")
         plt.savefig("./figures/problem" + str(p_id) + ".jpg")
     elif p_id == 1:
-        plt.figure(figsize=(4, 4))
+        plt.figure(figsize=(6, 6))
         plt.plot(x, y, label="function", alpha=.7, linestyle="-", lw = 3, c="k")
         plt.scatter(x_train, y_train, alpha=.7, marker="x", c="r")
         plt.plot(x_infer, y_relu, label="relu", alpha=.7, linestyle="--")
@@ -130,7 +129,7 @@ def main():
         plt.legend(loc="upper left")
         plt.savefig("./figures/problem" + str(p_id) + ".jpg")
     elif p_id == 2:
-        plt.figure(figsize=(4, 4))
+        plt.figure(figsize=(6, 6))
         plt.plot(x, y, label="function", alpha=.7, linestyle="-", lw = 3, c="k")
         plt.scatter(x_train, y_train, alpha=.7, marker="x", c="r")
         plt.plot(x_infer, y_relu, label="relu", alpha=.7, linestyle="--")
