@@ -69,9 +69,8 @@ def main():
     r_seed = 1234
 
     # perpare dataset
-    x_train = tf.random.uniform(
-        (30, 1), xmin, xmax, dtype=d_type
-    )
+    x_train = np.linspace(xmin, xmax, int(nx / 5))
+    x_train = tf.cast(x_train, dtype=d_type)
     y_train = tf.sin(np.pi * x_train)
 
     # define model
