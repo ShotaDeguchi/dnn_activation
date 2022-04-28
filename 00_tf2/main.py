@@ -58,7 +58,7 @@ def main():
     # define, train, and infer with tanh model
     w_init = "Glorot"
     b_init = "zeros"
-    act = "tanh"
+    act    = "tanh"
     model_tanh = DNN(
         x_train, y_train, 
         f_in, f_out, f_hid, depth, 
@@ -74,7 +74,7 @@ def main():
     # relu model
     w_init = "He"
     b_init = "zeros"
-    act = "relu"
+    act    = "relu"
     model_relu = DNN(
         x_train, y_train, 
         f_in, f_out, f_hid, depth, 
@@ -89,7 +89,7 @@ def main():
     # swish model
     w_init = "He"
     b_init = "zeros"
-    act = "swish"
+    act    = "swish"
     model_swish = DNN(
         x_train, y_train, 
         f_in, f_out, f_hid, depth, 

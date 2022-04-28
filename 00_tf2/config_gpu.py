@@ -64,3 +64,5 @@ def config_gpu(gpu_flg=1):
     else:
         raise NotImplementedError(">>>>> gpu_config")
 
+if __name__ == "__main__":
+    config_gpu(gpu_flg=1)
