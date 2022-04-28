@@ -105,7 +105,7 @@ def main():
     if p_id == 0:
         plt.figure(figsize=(4, 4))
         plt.plot(x, y, label="function", alpha=.3, linestyle="-", lw = 5, c="k")
-        plt.scatter(x_train, y_train, alpha=.7, marker="x", c="r")
+        plt.scatter(x_train, y_train, label="observation", alpha=.7, marker="x", c="r")
         plt.plot(x_infer, y_tanh, label="tanh", alpha=.7, linestyle="--")
         plt.plot(x_infer, y_relu, label="relu", alpha=.7, linestyle="--")
         plt.plot(x_infer, y_swish, label="swish", alpha=.7, linestyle="--")
@@ -131,7 +131,7 @@ def main():
     elif p_id == 1:
         plt.figure(figsize=(4, 4))
         plt.plot(x, y, label="function", alpha=.3, linestyle="-", lw = 5, c="k")
-        plt.scatter(x_train, y_train, alpha=.7, marker="x", c="r")
+        plt.scatter(x_train, y_train, label="observation", alpha=.7, marker="x", c="r")
         plt.plot(x_infer, y_tanh, label="tanh", alpha=.7, linestyle="--")
         plt.plot(x_infer, y_relu, label="relu", alpha=.7, linestyle="--")
         plt.plot(x_infer, y_swish, label="swish", alpha=.7, linestyle="--")
@@ -157,7 +157,7 @@ def main():
     elif p_id == 2:
         plt.figure(figsize=(4, 4))
         plt.plot(x, y, label="function", alpha=.3, linestyle="-", lw = 5, c="k")
-        plt.scatter(x_train, y_train, alpha=.7, marker="x", c="r")
+        plt.scatter(x_train, y_train, label="observation", alpha=.7, marker="x", c="r")
         plt.plot(x_infer, y_tanh, label="tanh", alpha=.7, linestyle="--")
         plt.plot(x_infer, y_relu, label="relu", alpha=.7, linestyle="--")
         plt.plot(x_infer, y_swish, label="swish", alpha=.7, linestyle="--")
