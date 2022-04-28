@@ -16,7 +16,7 @@ def main():
     config_gpu(gpu_flg = 1)
 
     # problem setup
-    p_id = 2
+    p_id = 0
     xmin = -1.
     xmax =  1.
     nx   = 2 ** 8
