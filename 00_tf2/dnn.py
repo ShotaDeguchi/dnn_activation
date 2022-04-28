@@ -211,13 +211,16 @@ class DNN(tf.keras.Model):
         return loss
 
     def train(
-        self, n_epc, n_btc, c_tol
+        self, n_epc, n_btc, c_tol, es_pat
     ):
         print(">>>>> train")
-        print("         n_epoch:", n_epc)
-        print("         n_batch:", n_btc)
-        print("         c_tlrnc:", c_tol)
+        print("         n_epoch :", n_epc)
+        print("         n_batch :", n_btc)
+        print("         c_tlrnc :", c_tol)
+        print("         patience:", es_pat)
 
+        wait = 0
+        loss_best = 9999
         t0 = time.time()
         if n_btc == -1:
             print(">>>>> executing full-batch training")
@@ -237,36 +240,47 @@ class DNN(tf.keras.Model):
                 # if epc % 100 == 0:
                 #     self.save(self.save_path + "model" + str(epc))
 
+                # early stopping
+                if loss_epc < loss_best:
+                    loss_best = loss_epc
+                    wait = 0
+                else:
+                    if wait >= es_pat:
+                        print(">>>>> early stopping")
+                        break
+                    wait += 1
+
                 # terminate if converged
                 if loss_epc < c_tol:
                     print(">>>>> converging to the tolerance")
                     break
 
-        # else:
-        #     print("\n>>>>> executing mini-batch training")
-        #     n_itr = ...
-        #     for epc in range(n_epc):
-        #         loss_epc = 0.
-        #         for idx in range(0, n_itr, n_btc):
-        #             loss_btc = self.loss_loglb()
-        #         loss_epc += loss_btc / int(n_itr / n_btc)
+        else:
+            print("\n>>>>> executing mini-batch training")
+            n_itr = ...
+            for epc in range(n_epc):
+                loss_epc = 0.
+                for idx in range(0, n_itr, n_btc):
+                    x_btc = self.x
+                    y_btc = self.x
+                    loss_btc = self.grad_desc(x_btc, y_btc)
+                loss_epc += loss_btc / int(n_itr / n_btc)
 
-        #         # monitor 
-        #         if epc % 10 == 0:
-        #             elps = time.time() - t0
-        #             print("epc: %d, loss: %.6e, elps: %.3f"
-        #                 % (epc, loss_epc, elps))
-        #             t0 = time.time()
+                # monitor 
+                if epc % 10 == 0:
+                    elps = time.time() - t0
+                    print("epc: %d, loss: %.6e, elps: %.3f"
+                        % (epc, loss_epc, elps))
+                    t0 = time.time()
 
-        #         # save 
-        #         if epc % 100 == 0:
-        #             # ......
-        #             model.save(...)
+                # # save 
+                # if epc % 100 == 0:
+                #     model.save(...)
 
-        #         # terminate if converged
-        #         if loss_epc < c_tol:
-        #             print(">>>>> converging to the tolerance")
-        #             break
+                # terminate if converged
+                if loss_epc < c_tol:
+                    print(">>>>> converging to the tolerance")
+                    break
 
     def infer(
         self, x

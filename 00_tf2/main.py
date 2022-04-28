@@ -35,6 +35,7 @@ def main():
     n_epc  = int(5e4)
     n_btc  = -1
     c_tol  = 1e-6
+    es_pat = 10
 
     # prepare data
     x = np.linspace(xmin, xmax, nx)
@@ -67,7 +68,7 @@ def main():
         d_type, r_seed
     )
     with tf.device("/device:GPU:0"):
-        model_tanh.train(n_epc, n_btc, c_tol)
+        model_tanh.train(n_epc, n_btc, c_tol, es_pat)
     # model_tanh.save("./saved_model/model_tanh")
     y_tanh = model_tanh.infer(x_infer)
 
@@ -83,7 +84,7 @@ def main():
         d_type, r_seed
     )
     with tf.device("/device:GPU:0"):
-        model_relu.train(n_epc, n_btc, c_tol)
+        model_relu.train(n_epc, n_btc, c_tol, es_pat)
     y_relu = model_relu.infer(x_infer)
 
     # swish model
@@ -98,7 +99,7 @@ def main():
         d_type, r_seed
     )
     with tf.device("/device:GPU:0"):
-        model_swish.train(n_epc, n_btc, c_tol)
+        model_swish.train(n_epc, n_btc, c_tol, es_pat)
     y_swish = model_swish.infer(x_infer)
 
     # compare
