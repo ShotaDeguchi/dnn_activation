@@ -256,7 +256,7 @@ class DNN(tf.keras.Model):
                     break
 
         else:
-            print("\n>>>>> executing mini-batch training")
+            print(">>>>> executing mini-batch training")
             raise NotImplementedError(">>>>> train")
 
     def infer(

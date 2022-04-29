@@ -135,8 +135,8 @@ class DNN(nn.Module):
         wait = 0
         loss_best = 9999
         t0 = time.time()
-        # if n_btc == -1:
-        #     print(">>>>> executing full-batch training")
+        if n_btc == -1:
+            print(">>>>> executing full-batch training")
         #     for epc in range(n_epc):
         #         loss_epc = 0.
         #         loss_epc = self.grad_desc(self.x, self.y)
@@ -168,9 +168,9 @@ class DNN(nn.Module):
         #             print(">>>>> converging to the tolerance")
         #             break
 
-        # else:
-        #     print("\n>>>>> executing mini-batch training")
-        #     raise NotImplementedError(">>>>> train")
+        else:
+            print(">>>>> executing mini-batch training")
+            raise NotImplementedError(">>>>> train")
 
     def infer(
         self, x
