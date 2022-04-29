@@ -257,30 +257,7 @@ class DNN(tf.keras.Model):
 
         else:
             print("\n>>>>> executing mini-batch training")
-            n_itr = ...
-            for epc in range(n_epc):
-                loss_epc = 0.
-                for idx in range(0, n_itr, n_btc):
-                    x_btc = self.x
-                    y_btc = self.x
-                    loss_btc = self.grad_desc(x_btc, y_btc)
-                loss_epc += loss_btc / int(n_itr / n_btc)
-
-                # monitor 
-                if epc % 10 == 0:
-                    elps = time.time() - t0
-                    print("epc: %d, loss: %.6e, elps: %.3f"
-                        % (epc, loss_epc, elps))
-                    t0 = time.time()
-
-                # # save 
-                # if epc % 100 == 0:
-                #     model.save(...)
-
-                # terminate if converged
-                if loss_epc < c_tol:
-                    print(">>>>> converging to the tolerance")
-                    break
+            raise NotImplementedError(">>>>> train")
 
     def infer(
         self, x

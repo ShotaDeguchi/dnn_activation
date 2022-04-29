@@ -32,7 +32,7 @@ def main():
     f_scl  = "minmax"
     d_type = "float32"
     r_seed = 1234
-    n_epc  = int(5e4)
+    n_epc  = int(3e4)
     n_btc  = -1
     c_tol  = 1e-6
     es_pat = 100
