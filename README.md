@@ -5,7 +5,7 @@ This repo is a supplementary material for [author's blog post (Japanese)](https:
 Activation functions are essential to introduce non-linearity to DNNs i.e. DNN approximations are heavily dependent on the properties of the selected activation functions. This repo builds neural networks to learn several functions with 3 different activation functions, namely, ReLU, Swish, and tanh. Networks have different parameter initializations, [Glorot normal](https://proceedings.mlr.press/v9/glorot10a.html) for tanh activation, [He normal](https://arxiv.org/abs/1502.01852) for ReLU ([Nair (2010)](https://www.cs.toronto.edu/~fritz/absps/reluICML.pdf)) and Swish ([Ramachandran (2017)](http://arxiv.org/abs/1710.05941), [Elfwing (2018)](https://arxiv.org/abs/1702.03118)). 
 
 ## Example
-ReLU network has zig-zag inference result, while others (tanh & Swish) have smooth approximations. This is due to their natures, to be exact, ReLU has C^0 continuity, tanh and Swish C^inf. 
+ReLU network has zig-zag inference result, while others (tanh & Swish) have smooth approximations. This is due to their natures, to be exact, ReLU has $ C^{0} $ continuity, tanh and Swish $ C^{\infty} $. 
 
 <img src="./00_tf2/figures/example.png">
 
