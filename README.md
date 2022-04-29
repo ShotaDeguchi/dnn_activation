@@ -1,5 +1,5 @@
 ﻿# dnn_activation
-This repo is a supplementary material for [author's blog post (Japanese)](link). Through a few instances, we investigate the relationship between [DNN (Deep Neural Network) approximation](https://doi.org/10.1016/0893-6080(89)90020-8) and activation function selection. 
+This repo is a supplementary material for [author's blog post (Japanese)](https://qiita.com/ShotaDeguchi/items/751a8ec86b7bc7ec34ed). Through a few instances, we investigate the relationship between [DNN (Deep Neural Network) approximation](https://doi.org/10.1016/0893-6080(89)90020-8) and activation function selection. 
 
 ## Purpose
 Activation functions are essential to introduce non-linearity to DNNs i.e. DNN approximations are heavily dependent on the properties of the selected activation functions. This repo builds neural networks to learn several functions with 3 different activation functions, namely, ReLU, Swish, and tanh. Networks have different parameter initializations, [Glorot normal](https://proceedings.mlr.press/v9/glorot10a.html) for tanh activation, [He normal](https://arxiv.org/abs/1502.01852) for ReLU ([Nair (2010)](https://www.cs.toronto.edu/~fritz/absps/reluICML.pdf)) and Swish ([Ramachandran (2017)](http://arxiv.org/abs/1710.05941), [Elfwing (2018)](https://arxiv.org/abs/1702.03118)). 
