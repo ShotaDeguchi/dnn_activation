@@ -36,6 +36,10 @@ class DNN(nn.Module):
         # self.device = device
         self.setup(r_seed, d_type)
 
+        print("\n************************************************************")
+        print("********************     DELLO WORLD     *******************")
+        print("************************************************************")
+
         # data
         self.x = x
         self.y = y
@@ -47,6 +51,53 @@ class DNN(nn.Module):
         np.random.seed(r_seed)
         torch.manual_seed(r_seed)
         torch.set_default_dtype(d_type)
+
+    def weight_init(
+        self, init, seed
+    ):
+        print(">>>>> weight_init")
+        print("         initializer:", init)
+        if init == "Glorot":
+            weight = tf.keras.initializers.GlorotNormal(seed = seed)
+        elif init == "He":
+            weight = tf.keras.initializers.HeNormal(seed = seed)
+        elif init == "LeCun":
+            weight = tf.keras.initializers.LecunNormal(seed = seed)
+        else:
+            raise NotImplementedError(">>>>> weight_init")
+        return weight
+
+    def bias_init(
+        self, init
+    ):
+        print(">>>>> bias_init")
+        print("         initializer:", init)
+        if init == "zeros":
+            bias = tf.keras.initializers.Zeros()
+        elif init == "ones":
+            bias = tf.keras.initializers.Ones()
+        else:
+            raise NotImplementedError(">>>>> bias_init")
+        return bias
+
+    def act_func(
+        self, act
+    ):
+        print(">>>>> act_func")
+        print("         activation:", act)
+        if act == "relu":
+            activation = tf.keras.activations.relu()
+        elif act == "elu":
+            activation = tf.keras.activations.elu()
+        elif act == "swish":
+            activation = tf.keras.activations.swish()
+        elif act == "tanh":
+            activation = tf.keras.activations.tanh()
+        elif act == "sin":
+            activation = tf.math.sin()
+        else:
+            raise NotImplementedError(">>>>> act_func")
+        return activation
 
     def dnn_init(
         self, f_in, f_out, f_hid, depth
