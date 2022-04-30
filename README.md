@@ -21,7 +21,14 @@ TensorFlow environment:
 |tensorflow|2.8.0|
 
 PyTorch environment:
-
+|Package|Version|
+|:---:|:---:|
+|keras|2.8.0|
+|matplotlib|3.5.1|
+|numpy|1.22.1|
+|pandas|1.4.1|
+|scipy|1.8.0|
+|torch|1.7.1+cu110|
 
 ## References
 [1] [author's blog post](link). 
