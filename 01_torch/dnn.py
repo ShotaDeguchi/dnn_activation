@@ -40,10 +40,15 @@ class DNN(nn.Module):
         print("********************     DELLO WORLD     *******************")
         print("************************************************************")
 
-        # data
+        # input - output pair
         self.x = x
         self.y = y
 
+        # for feature scaling
+        XY = tf.concat([x, y], 1)
+        self.lower = tf.cast(tf.reduce_min (XY, axis = 0), dtype=self.d_type)
+        self.upper = tf.cast(tf.reduce_max (XY, axis = 0), dtype=self.d_type)
+        self.mean  = tf.cast(tf.reduce_mean(XY, axis = 0), dtype=self.d_type)
 
         # build a deep neural network
         self.w_init = self.weight_init(self.w_init, self.r_seed)

@@ -44,6 +44,7 @@ class DNN(tf.keras.Model):
         self.x = x
         self.y = y
 
+        # for feature scaling
         XY = tf.concat([x, y], 1)
         self.lower = tf.cast(tf.reduce_min (XY, axis = 0), dtype=self.d_type)
         self.upper = tf.cast(tf.reduce_max (XY, axis = 0), dtype=self.d_type)
