@@ -44,6 +44,17 @@ class DNN(nn.Module):
         self.x = x
         self.y = y
 
+
+        # build a deep neural network
+        self.w_init = self.weight_init(self.w_init, self.r_seed)
+        self.b_init = self.bias_init(self.b_init)
+        self.act    = self.act_func(self.act)
+        self.dnn = self.dnn_init(
+            self.f_in, self.f_out, self.f_hid, self.depth, 
+            self.w_init, self.b_init, self.act
+        )
+
+
     def setup(
         self, d_type, r_seed
     ):
@@ -53,29 +64,27 @@ class DNN(nn.Module):
         torch.set_default_dtype(d_type)
 
     def weight_init(
-        self, init, seed
+        self, init, tnsr
     ):
         print(">>>>> weight_init")
         print("         initializer:", init)
         if init == "Glorot":
-            weight = tf.keras.initializers.GlorotNormal(seed = seed)
+            weight = nn.init.xavier_normal_(tnsr)
         elif init == "He":
-            weight = tf.keras.initializers.HeNormal(seed = seed)
-        elif init == "LeCun":
-            weight = tf.keras.initializers.LecunNormal(seed = seed)
+            weight = nn.init.kaiming_normal_(tnsr, a=0, mode="fan_in", nonlinearity="relu")
         else:
             raise NotImplementedError(">>>>> weight_init")
         return weight
 
     def bias_init(
-        self, init
+        self, init, tnsr
     ):
         print(">>>>> bias_init")
         print("         initializer:", init)
         if init == "zeros":
-            bias = tf.keras.initializers.Zeros()
+            bias = nn.init.zeros_(tnsr)
         elif init == "ones":
-            bias = tf.keras.initializers.Ones()
+            bias = nn.init.ones_(tnsr)
         else:
             raise NotImplementedError(">>>>> bias_init")
         return bias
@@ -86,25 +95,36 @@ class DNN(nn.Module):
         print(">>>>> act_func")
         print("         activation:", act)
         if act == "relu":
-            activation = tf.keras.activations.relu()
+            activation = nn.ReLU(inplace=False)
         elif act == "elu":
-            activation = tf.keras.activations.elu()
-        elif act == "swish":
-            activation = tf.keras.activations.swish()
+            activation = nn.ELU(alpha=1.0, inplace=False)
+        elif act == "swish" or act == "silu":
+            activation = nn.SiLU(inplace=False)
         elif act == "tanh":
-            activation = tf.keras.activations.tanh()
+            activation = nn.Tanh()
         elif act == "sin":
-            activation = tf.math.sin()
+            activation = torch.sin()
         else:
             raise NotImplementedError(">>>>> act_func")
         return activation
 
     def dnn_init(
-        self, f_in, f_out, f_hid, depth
+        self, 
+        f_in, f_out, f_hid, depth,
+        w_init, b_init, act
     ):
-        network = nn.Sequential(
-            nn.Linear(f_in, f_hid)
-        )
+        print(">>>>> dnn_init")
+        print("         f_in :", f_in)
+        print("         f_out:", f_out)
+        print("         f_hid:", f_hid)
+        print("         depth:", depth)
+        arch = []
+        arch.append(nn.Linear(f_in, f_hid))
+        for l in range(depth - 1):
+            arch.append(f_hid, f_hid)
+            arch.append(act)
+        arch.append(f_hid, f_out)
+        network = nn.Sequential(arch)
         return network
 
     def forward_pass(

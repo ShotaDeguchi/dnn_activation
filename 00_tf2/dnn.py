@@ -110,7 +110,7 @@ class DNN(tf.keras.Model):
             activation = tf.keras.activations.relu()
         elif act == "elu":
             activation = tf.keras.activations.elu()
-        elif act == "swish":
+        elif act == "swish" or act == "silu":
             activation = tf.keras.activations.swish()
         elif act == "tanh":
             activation = tf.keras.activations.tanh()
