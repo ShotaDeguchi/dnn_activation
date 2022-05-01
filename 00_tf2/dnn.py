@@ -215,10 +215,10 @@ class DNN(tf.keras.Model):
         self, n_epc, n_btc, c_tol, es_pat
     ):
         print(">>>>> train")
-        print("         n_epoch :", n_epc)
-        print("         n_batch :", n_btc)
-        print("         c_tlrnc :", c_tol)
-        print("         patience:", es_pat)
+        print("         n_epoch:", n_epc)
+        print("         n_batch:", n_btc)
+        print("         c_tlrnc:", c_tol)
+        print("         es_pat :", es_pat)
 
         wait = 0
         loss_best = 9999
