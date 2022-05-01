@@ -132,6 +132,36 @@ class DNN(nn.Module):
         network = nn.Sequential(arch)
         return network
 
+    def opt_alg(
+        self, lr, opt, params
+    ):
+        print(">>>>> opt_alg")
+        print("         learning rate:", lr)
+        print("         optimizer    :", opt)
+        if opt == "SGD":
+            optimizer = torch.optim.SGD(
+                params, lr=lr, momentum=0, dampening=0, weight_decay=0, nesterov=False, *, maximize=False
+            )
+        elif opt == "RMSprop":
+            optimizer = torch.optim.RMSprop(
+                params, lr=lr, alpha=0.99, eps=1e-08, weight_decay=0, momentum=0, centered=False
+            )
+        elif opt == "Adam":
+            optimizer = torch.optim.Adam(
+                params, lr=lr, betas=(0.9, 0.999), eps=1e-08, weight_decay=0, amsgrad=False, maximize=False
+            )
+        elif opt == "Adamax":
+            optimizer = torch.optim.Adamax(
+                params, lr=lr, betas=(0.9, 0.999), eps=1e-08, weight_decay=0
+            )
+        elif opt == "Nadam":
+            optimizer = torch.optim.NAdam(
+                params, lr=lr, betas=(0.9, 0.999), eps=1e-08, weight_decay=0, momentum_decay=0.004
+            )
+        else:
+            raise NotImplementedError(">>>>> opt_alg")
+        return optimizer
+
     def forward_pass(
         self, x
     ):
