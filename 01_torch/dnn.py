@@ -195,8 +195,8 @@ class DNN(nn.Module):
         t0 = time.time()
         if n_btc == -1:
             print(">>>>> executing full-batch training")
-        #     for epc in range(n_epc):
-        #         loss_epc = 0.
+            for epc in range(n_epc):
+                loss_epc = 0.
         #         loss_epc = self.grad_desc(self.x, self.y)
         #         self.loss_log.append(loss_epc)
 
@@ -207,24 +207,20 @@ class DNN(nn.Module):
         #                 % (epc, loss_epc, elps))
         #             t0 = time.time()
 
-        #         # # save 
-        #         # if epc % 100 == 0:
-        #         #     self.save(self.save_path + "model" + str(epc))
+                # early stopping
+                if loss_epc < loss_best:
+                    loss_best = loss_epc
+                    wait = 0
+                else:
+                    if wait >= es_pat:
+                        print(">>>>> early stopping")
+                        break
+                    wait += 1
 
-        #         # early stopping
-        #         if loss_epc < loss_best:
-        #             loss_best = loss_epc
-        #             wait = 0
-        #         else:
-        #             if wait >= es_pat:
-        #                 print(">>>>> early stopping")
-        #                 break
-        #             wait += 1
-
-        #         # terminate if converged
-        #         if loss_epc < c_tol:
-        #             print(">>>>> converging to the tolerance")
-        #             break
+                # terminate if converged
+                if loss_epc < c_tol:
+                    print(">>>>> converging to the tolerance")
+                    break
 
         else:
             print(">>>>> executing mini-batch training")
@@ -234,4 +230,5 @@ class DNN(nn.Module):
         self, x
     ):
         print(">>>>> infer")
+
 

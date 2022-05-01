@@ -58,7 +58,7 @@ def main():
     else:
         raise NotImplementedError(">>>>> p_id")
 
-    # define, train, and infer with tanh model
+    # define, train, save
     w_init = "Glorot"
     b_init = "zeros"
     act    = "tanh"
@@ -69,9 +69,12 @@ def main():
         lr, opt, f_scl, 
         d_type, r_seed
     )
-    with tf.device("/device:GPU:0"):
-        model_tanh.train(n_epc, n_btc, c_tol, es_pat)
-    # model_tanh.save("./saved_model/model_tanh")
+    # train...
+    torch.save(model_tanh.state_dict(), "./saved_model/model_tanh.pth")
+
+    # define, load, infer
+    model_tanh = ...
+    model_tanh.load_state_dict(torch.load("./saved_model/model_tanh.pth"))
     y_tanh = model_tanh.infer(x_infer)
 
     # relu
