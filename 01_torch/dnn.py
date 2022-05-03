@@ -58,7 +58,7 @@ class DNN(nn.Module):
             self.f_in, self.f_out, self.f_hid, self.depth, 
             self.w_init, self.b_init, self.act
         )
-
+        self.params = self.dnn.parameters()
 
     def setup(
         self, d_type, r_seed
@@ -140,7 +140,7 @@ class DNN(nn.Module):
         print("         optimizer    :", opt)
         if opt == "SGD":
             optimizer = torch.optim.SGD(
-                params, lr=lr, momentum=0, dampening=0, weight_decay=0, nesterov=False, *, maximize=False
+                params, lr=lr, momentum=0, dampening=0, weight_decay=0, nesterov=False, maximize=False
             )
         elif opt == "RMSprop":
             optimizer = torch.optim.RMSprop(
