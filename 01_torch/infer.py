@@ -5,6 +5,7 @@ define, load, and infer
 """
 
 import torch
+import matplotlib.pyplot as plt
 
 def main():
     # problem setup
@@ -51,6 +52,14 @@ def main():
     )
     model_tanh.load_state_dict(torch.load("./saved_model/model_tanh.pth"))
     y_tanh = model_tanh.infer(x_infer)
+
+    plt.figure(figsize=(4, 4))
+    plt.plot(x, y, label="ground truth")
+    plt.plot(x_infer, y_tanh,  label="tanh")
+    plt.plot(x_infer, y_relu,  label="relu")
+    plt.plot(x_infer, y_swish, label="swish")
+    plt.legend(loc="upper right")
+    plt.savefig()
 
 if __name__ == "__main__":
     main()

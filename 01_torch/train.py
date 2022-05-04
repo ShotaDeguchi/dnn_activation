@@ -49,7 +49,7 @@ def main():
         lr, opt, f_scl, 
         d_type, r_seed
     )
-    # train...
+    model_tanh.train()
     torch.save(model_tanh.state_dict(), "./saved_model/model_tanh.pth")
 
 if __name__ == "__main__":
