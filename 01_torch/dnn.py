@@ -34,7 +34,7 @@ class DNN(nn.Module):
         self.d_type = d_type
         self.r_seed = r_seed
         # self.device = device
-        self.setup(r_seed, d_type)
+        self.setup(self.d_type, self.r_seed)
 
         print("\n************************************************************")
         print("********************     DELLO WORLD     *******************")
@@ -45,10 +45,13 @@ class DNN(nn.Module):
         self.y = y
 
         # for feature scaling
-        XY = torch.cat((x, y), dim = 1)
-        self.lower = tf.cast(tf.reduce_min (XY, axis=0), dtype=self.d_type)
-        self.upper = tf.cast(tf.reduce_max (XY, axis=0), dtype=self.d_type)
-        self.mean  = tf.cast(tf.reduce_mean(XY, axis=0), dtype=self.d_type)
+        self.XY = torch.cat((x, y), dim=1)
+        self.lower = torch.min (self.XY, dim=0)
+        self.upper = torch.max (self.XY, dim=0)
+        self.mean  = torch.mean(self.XY, dim=0)
+
+        # # normalize?
+        # self.XY = nn.functional.normalize(self.XY, p=2., dim=0)
 
         # build a deep neural network
         self.w_init = self.weight_init(self.w_init, self.r_seed)
@@ -74,7 +77,7 @@ class DNN(nn.Module):
         print(">>>>> weight_init")
         print("         initializer:", init)
         if init == "Glorot":
-            weight = nn.init.xavier_normal_(tnsr)
+            weight = nn.init.xavier_normal_(tnsr, gain=1.)
         elif init == "He":
             weight = nn.init.kaiming_normal_(tnsr, a=0, mode="fan_in", nonlinearity="relu")
         else:
@@ -123,13 +126,20 @@ class DNN(nn.Module):
         print("         f_out:", f_out)
         print("         f_hid:", f_hid)
         print("         depth:", depth)
-        arch = []
-        arch.append(nn.Linear(f_in, f_hid))
+        layers = []
+        layers.append(nn.Linear(f_in, f_hid))
         for l in range(depth - 1):
-            arch.append(f_hid, f_hid)
-            arch.append(act)
-        arch.append(f_hid, f_out)
-        network = nn.Sequential(arch)
+            layers.append(nn.Linear(f_hid, f_hid))
+            layers.append(act)
+
+            layers.append(nn.Linear(f_hid, f_hid))
+            w_init(nn.Linear(f_hid, f_hid).weight)
+
+            self.weight_init(init, tnsr)
+
+        layers.append(nn.Linear(f_hid, f_out))
+        network = nn.Sequential(layers)
+        print(network)
         return network
 
     def opt_alg(
@@ -169,15 +179,13 @@ class DNN(nn.Module):
         if self.f_scl == None:
             z = x
         elif self.f_scl == "minmax":
-            z = x
+            z = 2. * (x - self.lower) / (self.upper - self.lower) - 1.            
         elif self.f_scl == "mean":
-            z = x
+            z = (x - self.mean) / (self.upper - self.lower)
         else:
             raise NotImplementedError(">>>>> forward_pass")
-        
-        # y = 
-        # return y
-
+        y_ = self.dnn(z)
+        return y_
 
 
 

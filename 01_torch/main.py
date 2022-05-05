@@ -62,6 +62,8 @@ def main():
     w_init = "Glorot"
     b_init = "zeros"
     act    = "tanh"
+    print("d_type", d_type)
+    print("r_seed", r_seed)
     model_tanh = DNN(
         x_train, y_train, 
         f_in, f_out, f_hid, depth, 
