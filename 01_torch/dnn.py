@@ -132,7 +132,7 @@ class DNN(nn.Module):
             layers.append(nn.Linear(f_hid, f_hid))
             layers.append(act)
 
-            layers.append(nn.Linear(f_hid, f_hid))
+            layers.append(nn.Linear(f_hid, f_hid, bias=True))
             w_init(nn.Linear(f_hid, f_hid).weight)
 
             self.weight_init(init, tnsr)
