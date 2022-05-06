@@ -187,7 +187,12 @@ class DNN(nn.Module):
         y_ = self.dnn(z)
         return y_
 
-
+    def loss(
+        self, x, y
+    ):
+        y_ = self.dnn(x)
+        loss = nn.MSELoss(reduction='mean')
+        loss = loss(y, y_)
 
     def train(
         self, n_epc, n_btc, c_tol, es_pat
