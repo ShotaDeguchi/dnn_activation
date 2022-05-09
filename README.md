@@ -31,7 +31,7 @@ PyTorch environment:
 |torch|1.7.1+cu110|
 
 ## References
-[1] [author's blog post](link). 
+[1] [author's blog post](https://qiita.com/ShotaDeguchi/items/751a8ec86b7bc7ec34ed). 
 <br>
 [2] Hornik, K., Stinchcombe, M., White, H.: Multilayer feedforward networks are universal approximators, *Neural Networks*, Vol. 2, No. 5, pp. Pages 359-366, 1989. ([paper](https://doi.org/10.1016/0893-6080(89)90020-8))
 <br>
