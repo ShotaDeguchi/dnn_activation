@@ -58,6 +58,7 @@ def main():
     else:
         raise NotImplementedError(">>>>> p_id")
 
+    # tanh model
     # define, train, save
     w_init = "Glorot"
     b_init = "zeros"
@@ -71,26 +72,72 @@ def main():
         lr, opt, f_scl, 
         d_type, r_seed
     )
-    # train...
+    model_tanh.train()
     torch.save(model_tanh.state_dict(), "./saved_model/model_tanh.pth")
-
     # define, load, infer
-    model_tanh = ...
+    model_tanh = DNN(
+        x_train, y_train, 
+        f_in, f_out, f_hid, depth, 
+        w_init, b_init, act, 
+        lr, opt, f_scl, 
+        d_type, r_seed
+    )
     model_tanh.load_state_dict(torch.load("./saved_model/model_tanh.pth"))
     y_tanh = model_tanh.infer(x_infer)
 
     # relu
-    w_init = "Glorot"
+    # define, train, save
+    w_init = "He"
     b_init = "zeros"
     act    = "relu"
-    model_tanh = DNN
+    print("d_type", d_type)
+    print("r_seed", r_seed)
+    model_relu = DNN(
+        x_train, y_train, 
+        f_in, f_out, f_hid, depth, 
+        w_init, b_init, act, 
+        lr, opt, f_scl, 
+        d_type, r_seed
+    )
+    model_relu.train()
+    torch.save(model_relu.state_dict(), "./saved_model/model_relu.pth")
+    # define, load, infer
+    model_relu = DNN(
+        x_train, y_train, 
+        f_in, f_out, f_hid, depth, 
+        w_init, b_init, act, 
+        lr, opt, f_scl, 
+        d_type, r_seed
+    )
+    model_relu.load_state_dict(torch.load("./saved_model/model_relu.pth"))
+    y_relu = model_relu.infer(x_infer)
 
-    # swish
-    w_init = "Glorot"
+    # swish (silu)
+    # define, train, save
+    w_init = "He"
     b_init = "zeros"
     act    = "silu"
-    model_tanh = DNN
-
+    print("d_type", d_type)
+    print("r_seed", r_seed)
+    model_silu = DNN(
+        x_train, y_train, 
+        f_in, f_out, f_hid, depth, 
+        w_init, b_init, act, 
+        lr, opt, f_scl, 
+        d_type, r_seed
+    )
+    model_silu.train()
+    torch.save(model_silu.state_dict(), "./saved_model/model_silu.pth")
+    # define, load, infer
+    model_silu = DNN(
+        x_train, y_train, 
+        f_in, f_out, f_hid, depth, 
+        w_init, b_init, act, 
+        lr, opt, f_scl, 
+        d_type, r_seed
+    )
+    model_silu.load_state_dict(torch.load("./saved_model/model_silu.pth"))
+    y_silu = model_silu.infer(x_infer)
 
     # compare
     if p_id == 0:
@@ -99,7 +146,7 @@ def main():
         plt.scatter(x_train, y_train, label="observation", alpha=.7, marker="x", c="r")
         plt.plot(x_infer, y_tanh, label="tanh", alpha=.7, linestyle="--")
         plt.plot(x_infer, y_relu, label="relu", alpha=.7, linestyle="--")
-        plt.plot(x_infer, y_swish, label="swish", alpha=.7, linestyle="--")
+        plt.plot(x_infer, y_silu, label="silu", alpha=.7, linestyle="--")
         plt.xlabel("x")
         plt.ylabel("y")
         plt.xlim(-1.2, 1.2)
@@ -111,7 +158,7 @@ def main():
         plt.figure(figsize=(8, 4))
         plt.plot(model_tanh.loss_log, label="tanh", alpha=.7, linestyle="--")
         plt.plot(model_relu.loss_log, label="relu", alpha=.7, linestyle="--")
-        plt.plot(model_swish.loss_log, label="swish", alpha=.7, linestyle="--")
+        plt.plot(model_silu.loss_log, label="silu", alpha=.7, linestyle="--")
         plt.xlabel("epoch")
         plt.ylabel("loss")
         plt.yscale("log")
@@ -125,7 +172,7 @@ def main():
         plt.scatter(x_train, y_train, label="observation", alpha=.7, marker="x", c="r")
         plt.plot(x_infer, y_tanh, label="tanh", alpha=.7, linestyle="--")
         plt.plot(x_infer, y_relu, label="relu", alpha=.7, linestyle="--")
-        plt.plot(x_infer, y_swish, label="swish", alpha=.7, linestyle="--")
+        plt.plot(x_infer, y_silu, label="silu", alpha=.7, linestyle="--")
         plt.xlabel("x")
         plt.ylabel("y")
         plt.xlim(-1.2, 1.2)
@@ -137,7 +184,7 @@ def main():
         plt.figure(figsize=(8, 4))
         plt.plot(model_tanh.loss_log, label="tanh", alpha=.7, linestyle="--")
         plt.plot(model_relu.loss_log, label="relu", alpha=.7, linestyle="--")
-        plt.plot(model_swish.loss_log, label="swish", alpha=.7, linestyle="--")
+        plt.plot(model_silu.loss_log, label="silu", alpha=.7, linestyle="--")
         plt.xlabel("epoch")
         plt.ylabel("loss")
         plt.yscale("log")
@@ -151,7 +198,7 @@ def main():
         plt.scatter(x_train, y_train, label="observation", alpha=.7, marker="x", c="r")
         plt.plot(x_infer, y_tanh, label="tanh", alpha=.7, linestyle="--")
         plt.plot(x_infer, y_relu, label="relu", alpha=.7, linestyle="--")
-        plt.plot(x_infer, y_swish, label="swish", alpha=.7, linestyle="--")
+        plt.plot(x_infer, y_silu, label="silu", alpha=.7, linestyle="--")
         plt.xlabel("x")
         plt.ylabel("y")
         plt.xlim(-1.2, 1.2)
@@ -163,7 +210,7 @@ def main():
         plt.figure(figsize=(8, 4))
         plt.plot(model_tanh.loss_log, label="tanh", alpha=.7, linestyle="--")
         plt.plot(model_relu.loss_log, label="relu", alpha=.7, linestyle="--")
-        plt.plot(model_swish.loss_log, label="swish", alpha=.7, linestyle="--")
+        plt.plot(model_silu.loss_log, label="silu", alpha=.7, linestyle="--")
         plt.xlabel("epoch")
         plt.ylabel("loss")
         plt.yscale("log")
