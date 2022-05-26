@@ -144,34 +144,26 @@ class DNN(nn.Module):
         print(network)
         return network
 
-    def opt_alg(
+    def opt_algorithm(
         self, lr, opt, params
     ):
-        print(">>>>> opt_alg")
+        print(">>>>> opt_algorithm")
         print("         learning rate:", lr)
         print("         optimizer    :", opt)
         if opt == "SGD":
-            optimizer = torch.optim.SGD(
-                params, lr=lr, momentum=0, dampening=0, weight_decay=0, nesterov=False, maximize=False
-            )
+            optimizer = torch.optim.SGD(params, lr=lr)
         elif opt == "RMSprop":
-            optimizer = torch.optim.RMSprop(
-                params, lr=lr, alpha=0.99, eps=1e-08, weight_decay=0, momentum=0, centered=False
-            )
+            optimizer = torch.optim.RMSprop(params, lr=lr)
         elif opt == "Adam":
-            optimizer = torch.optim.Adam(
-                params, lr=lr, betas=(0.9, 0.999), eps=1e-08, weight_decay=0, amsgrad=False, maximize=False
-            )
+            optimizer = torch.optim.Adam(params, lr=lr, amsgrad=False)
         elif opt == "Adamax":
-            optimizer = torch.optim.Adamax(
-                params, lr=lr, betas=(0.9, 0.999), eps=1e-08, weight_decay=0
-            )
+            optimizer = torch.optim.Adamax(params, lr=lr)
         elif opt == "Nadam":
-            optimizer = torch.optim.NAdam(
-                params, lr=lr, betas=(0.9, 0.999), eps=1e-08, weight_decay=0, momentum_decay=0.004
-            )
+            optimizer = torch.optim.NAdam(params, lr=lr)
+        elif opt == "AMSgrad":
+            optimizer = torch.optim.Adam(params, lr=lr, amsgrad=True)
         else:
-            raise NotImplementedError(">>>>> opt_alg")
+            raise NotImplementedError(">>>>> opt_algorithm")
         return optimizer
 
     def forward_pass(
